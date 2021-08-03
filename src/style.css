@@ -1,3 +1,4 @@
+
 /* @font-face {
     font-family: 'MyFont';
     src: url('./fonts/Neuton.ttf') format('ttf');
@@ -5,9 +6,99 @@
     font-style: normal;
   } */
 
-.header {
-    color: red;
-    font-family: 'MyFont', sans-serif;
-    background: url('./images/notepad.png');
+  :root{
+    --purp: #950740;
+    --light-purp: #c3073f;
+    --dark-purp: #6f2232;
+    --grey: #4e4e50;
+    --black: #1a1a1d;
+    font-family: sans-serif;
   }
 
+body{
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  background-color: var(--dark-purp);
+  height: 20vh;
+  top: 0; left: 0; right: 0;
+  color: var(--black);
+
+  }
+
+  #main{
+    display: flex;
+    height: 74vh; 
+    /* bottom: 0; */
+  }
+
+  #nav{
+    background-color: var(--purp) ;
+    flex: 0 0 20vw;
+    order: -1;
+    padding: 1rem;
+    /* text-align: center; */
+
+  }
+
+  #nav ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    /* text-decoration: none; */
+    /* float: left; */
+
+  }
+
+  #nav li{
+    margin: 1rem;
+    /* background: yellow; */
+    padding: 1rem;
+    /* left: 0; */
+  }
+
+  #nav li:hover{
+    margin: .75rem;
+    background: var(--light-purp);
+    /* padding: 1rem; */
+
+  }
+
+  #article{
+    background: var(--grey);
+    padding: 3rem;
+    flex: 1;
+  }
+
+  #content{
+
+    background-color: var(--light-purp) ;
+    height: 400px;
+    width: 400px;
+  }
+
+  .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--dark-purp);
+  padding: 1rem;
+
+  }
+
+#title{
+  font-size: 4rem;
+  font-family: 'MyFont', sans-serif;
+  margin-left: 4rem;
+
+}
+
+#logo{
+  /* margin: 1rem; */
+  margin-left: 5rem;
+  
+}
