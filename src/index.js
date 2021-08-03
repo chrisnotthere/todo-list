@@ -1,38 +1,17 @@
-import _ from 'lodash';
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+import '@fortawesome/fontawesome-free/js/regular'
+import '@fortawesome/fontawesome-free/js/brands'
+
+import _, { head } from 'lodash';
 import './style.css';
-//import Icon from './images/notepad.png'
+import Icon from './images/notepad.png'
 import printMe from './print.js';
+import {loadHeader, loadFooter} from './header-footer';
+import {loadNav, loadMain, loadArticle} from './main-content';
 
 
-
-function createHeader() {
-    const header = document.createElement('header');
-
-    const element = document.createElement('div');
-    const btn = document.createElement('button');
-
-    // Lodash, now imported by this script
-    header.innerHTML = 'TODO List';
-    header.classList.add('header');
-
-    // Add the image to our existing div.
-    //const myIcon = new Image();
-    // myIcon.width = '200px';
-    //myIcon.src = Icon;
-
-    //element.appendChild(myIcon);
-
-    // btn.innerHTML = 'Click me and check the console!';
-    // btn.onclick = printMe;
-  
-    // element.appendChild(btn);
-
-    // header.appendChild(element);
-
-
-    return header;
-    }
-  
-document.body.appendChild(createHeader());
-
-
+loadHeader();
+loadMain();
+//loadNav();
+loadFooter();
