@@ -1,0 +1,13 @@
+/* @font-face {
+    font-family: 'MyFont';
+    src: url('./fonts/Neuton.ttf') format('ttf');
+    font-weight: 500;
+    font-style: normal;
+  } */
+
+.header {
+    color: red;
+    font-family: 'MyFont', sans-serif;
+    background: url('./images/notepad.png');
+  }
+
