@@ -76,17 +76,12 @@ body{
 
   #nav ul:nth-child(2){
     margin-left: 1rem;
-
   }
 
   #projectTitle{
-    /* color: pink !important; */
     margin-left: 0 !important;
   }
 
-  /* #projects:first-child{
-    margin-left: 0 !important;
-  } */
 
   #article{
     display: flex;
@@ -95,14 +90,91 @@ body{
     background: var(--grey);
     padding: 3rem;
     flex: 1;
+    color: var(--black);
   }
 
   #content{
     background-color: var(--light-purp) ;
     height: 80%;
     width: 90%;
-    /* margin: 1rem; */
+    padding: 1rem;
+  }
 
+  #content ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+  }
+
+  #content li{
+    margin: .5rem;
+    /* background: yellow; */
+    padding: .5rem;
+    /* left: 0; */
+    font-weight: bold;
+    
+  }
+
+  #content li:hover{
+    /* margin: .75rem; */
+    background: var(--light-purp);
+    /* padding: 1rem; */
+
+  }
+
+  #content ul{
+    margin-left: 2rem;
+  }
+
+  #todoTitle{
+    margin-left: -0.1rem !important;
+    font-size: 2rem;
+  }
+
+  #todoTitleUL{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+/* 
+  #todoTitle:hover{
+
+    background-color: #4e4e50;
+  } */
+
+  #todoDisplay li:hover{
+    background-color: var(--purp);
+    color: black;
+  }
+
+  .userTask{
+    /* color: green; */
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #addTask{
+    /* margin-left: -0.1rem !important; */
+    /* font-size: 1.1rem; */
+    /* color: pink; */
+    /* color: lighten(var(--black), 90%); */
+    /* filter: brightness(150%); */
+    /* color:#918282 */
+    display: flex;
+    align-items: center;
+
+  }
+
+  #addTask:hover{
+    /* background-color: var(--purp); */
+    color: black;
+  }
+
+  #addLogo{
+    margin-right: 0.5rem;
   }
 
   .footer {
