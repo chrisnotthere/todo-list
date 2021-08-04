@@ -1,190 +1,228 @@
 
 /* @font-face {
-    font-family: 'MyFont';
-    src: url('./fonts/Neuton.ttf') format('ttf');
-    font-weight: 500;
-    font-style: normal;
-  } */
+  font-family: 'MyFont';
+  src: url('./fonts/Neuton.ttf') format('ttf');
+  font-weight: 500;
+  font-style: normal;
+} */
 
-  :root{
-    --purp: #950740;
-    --light-purp: #c3073f;
-    --dark-purp: #6f2232;
-    --grey: #4e4e50;
-    --black: #1a1a1d;
-    font-family: sans-serif;
-  }
+:root{
+  --purp: #950740;
+  --light-purp: #c3073f;
+  --dark-purp: #6f2232;
+  --grey: #4e4e50;
+  --black: #1a1a1d;
+  font-family: sans-serif;
+}
 
 body{
-  margin: 0;
+margin: 0;
 }
 
 .header {
+display: flex;
+align-items: center;
+background-color: var(--dark-purp);
+height: 14vh;
+top: 0; left: 0; right: 0;
+color: var(--black);
+
+}
+
+#main{
+  display: flex;
+  height: 80vh; 
+  /* bottom: 0; */
+}
+
+#nav{
+  background-color: var(--purp) ;
+  flex: 0 0 20vw;
+  order: -1;
+  padding: 1rem;
+  /* text-align: center; */
+
+}
+
+#inbox{
+  display: flex;
+}
+
+#inboxIcon{
+  margin-right: 1rem;
+}
+
+#today{
+  display: flex;
+}
+
+#todayIcon{
+  margin-right: 1rem;
+}
+
+#thisWeek{
+  display: flex;
+}
+
+#thisWeekIcon{
+  margin-right: 1rem;
+}
+
+#project1{
+  /* display: flex;
+  justify-content: space-between; */
+  display: grid;
+  grid-template-columns: 20% 70% 10%;
+
+}
+
+#project1Icon{
+  /* margin-right: 1rem; */
+}
+
+#project2{
+  /* display: flex;
+  justify-content: space-between; */
+  display: grid;
+  grid-template-columns: 20% 70% 10%;
+
+}
+
+#project2Icon{
+  /* margin-right: 1rem; */
+}
+
+.noHover{
+  pointer-events: none;
+}
+
+#nav ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+#nav li{
+  margin: 1rem;
+  padding: 1rem;
+  font-weight: bold;
+  color: var(--black);
+}
+
+#nav li:hover{
+  background: var(--light-purp);
+  color: black;
+}
+
+#nav ul:nth-child(2){
+  margin-left: 1rem;
+}
+
+#projectTitle{
+  margin-left: 0 !important;
+}
+
+#addProject{
+  display: flex;
+}
+
+#addProjectIcon{
+  margin-right: 1rem;
+}
+
+#article{
+  display: flex;
+  justify-content: center;
+  background: var(--grey);
+  padding: 3rem;
+  flex: 1;
+  color: var(--black);
+}
+
+#content{
+  background-color: var(--light-purp) ;
+  height: 80%;
+  width: 90%;
+  padding: 1rem;
+}
+
+#content ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+}
+
+#content li{
+  margin: .5rem;
+  padding: .5rem;
+  font-weight: bold;
+  
+}
+
+#content li:hover{
+  background: var(--light-purp);
+}
+
+#content ul{
+  margin-left: 2rem;
+}
+
+#todoTitle{
+  margin-left: -0.1rem !important;
+  font-size: 2rem;
+}
+
+#todoTitleSort{
+  margin-right: 2rem;
+}
+
+#todoTitleUL{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+
+#todoDisplay li:hover{
+  background-color: var(--purp);
+  color: black;
+}
+/* /// */
+.userTask{
+  /* display: flex; */
+  /* justify-content: space-between; */
+
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 3% 70% 5% 5% 15%;
+
+}
+
+#addTask{
   display: flex;
   align-items: center;
-  background-color: var(--dark-purp);
-  height: 14vh;
-  top: 0; left: 0; right: 0;
-  color: var(--black);
 
-  }
+}
 
-  #main{
-    display: flex;
-    height: 80vh; 
-    /* bottom: 0; */
-  }
+#addTask:hover{
+  color: black;
+}
 
-  #nav{
-    background-color: var(--purp) ;
-    flex: 0 0 20vw;
-    order: -1;
-    padding: 1rem;
-    /* text-align: center; */
+#addLogo{
+  margin-right: 0.5rem;
+}
 
-  }
-
-  .noHover{
-    pointer-events: none;
-  }
-
-  #nav ul{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    /* text-decoration: none; */
-    /* float: left; */
-
-  }
-
-  #nav li{
-    margin: 1rem;
-    /* background: yellow; */
-    padding: 1rem;
-    /* left: 0; */
-    font-weight: bold;
-    
-  }
-
-  #nav li:hover{
-    /* margin: .75rem; */
-    background: var(--light-purp);
-    /* padding: 1rem; */
-
-  }
-
-  #nav ul:nth-child(2){
-    margin-left: 1rem;
-  }
-
-  #projectTitle{
-    margin-left: 0 !important;
-  }
-
-
-  #article{
-    display: flex;
-    /* align-content: center; */
-    justify-content: center;
-    background: var(--grey);
-    padding: 3rem;
-    flex: 1;
-    color: var(--black);
-  }
-
-  #content{
-    background-color: var(--light-purp) ;
-    height: 80%;
-    width: 90%;
-    padding: 1rem;
-  }
-
-  #content ul{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border: 0;
-
-  }
-
-  #content li{
-    margin: .5rem;
-    /* background: yellow; */
-    padding: .5rem;
-    /* left: 0; */
-    font-weight: bold;
-    
-  }
-
-  #content li:hover{
-    /* margin: .75rem; */
-    background: var(--light-purp);
-    /* padding: 1rem; */
-
-  }
-
-  #content ul{
-    margin-left: 2rem;
-  }
-
-  #todoTitle{
-    margin-left: -0.1rem !important;
-    font-size: 2rem;
-  }
-
-  #todoTitleUL{
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-  }
-
-/* 
-  #todoTitle:hover{
-
-    background-color: #4e4e50;
-  } */
-
-  #todoDisplay li:hover{
-    background-color: var(--purp);
-    color: black;
-  }
-
-  .userTask{
-    /* color: green; */
-    display: flex;
-    justify-content: space-between;
-  }
-
-  #addTask{
-    /* margin-left: -0.1rem !important; */
-    /* font-size: 1.1rem; */
-    /* color: pink; */
-    /* color: lighten(var(--black), 90%); */
-    /* filter: brightness(150%); */
-    /* color:#918282 */
-    display: flex;
-    align-items: center;
-
-  }
-
-  #addTask:hover{
-    /* background-color: var(--purp); */
-    color: black;
-  }
-
-  #addLogo{
-    margin-right: 0.5rem;
-  }
-
-  .footer {
+.footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--dark-purp);
   padding: 1rem;
 
-  }
+}
 
 #title{
   font-size: 4rem;
@@ -194,7 +232,8 @@ body{
 }
 
 #logo{
-  /* margin: 1rem; */
   margin-left: 5rem;
-  
 }
+
+
+
