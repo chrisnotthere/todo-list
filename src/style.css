@@ -23,7 +23,7 @@ body{
   display: flex;
   align-items: center;
   background-color: var(--dark-purp);
-  height: 20vh;
+  height: 14vh;
   top: 0; left: 0; right: 0;
   color: var(--black);
 
@@ -31,7 +31,7 @@ body{
 
   #main{
     display: flex;
-    height: 74vh; 
+    height: 80vh; 
     /* bottom: 0; */
   }
 
@@ -42,6 +42,10 @@ body{
     padding: 1rem;
     /* text-align: center; */
 
+  }
+
+  .noHover{
+    pointer-events: none;
   }
 
   #nav ul{
@@ -59,26 +63,46 @@ body{
     /* background: yellow; */
     padding: 1rem;
     /* left: 0; */
+    font-weight: bold;
+    
   }
 
   #nav li:hover{
-    margin: .75rem;
+    /* margin: .75rem; */
     background: var(--light-purp);
     /* padding: 1rem; */
 
   }
 
+  #nav ul:nth-child(2){
+    margin-left: 1rem;
+
+  }
+
+  #projectTitle{
+    /* color: pink !important; */
+    margin-left: 0 !important;
+  }
+
+  /* #projects:first-child{
+    margin-left: 0 !important;
+  } */
+
   #article{
+    display: flex;
+    /* align-content: center; */
+    justify-content: center;
     background: var(--grey);
     padding: 3rem;
     flex: 1;
   }
 
   #content{
-
     background-color: var(--light-purp) ;
-    height: 400px;
-    width: 400px;
+    height: 80%;
+    width: 90%;
+    /* margin: 1rem; */
+
   }
 
   .footer {

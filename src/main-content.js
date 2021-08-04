@@ -5,7 +5,6 @@ function createNav(){
 
     const controls = document.createElement('ul'); 
     controls.id = 'controls';
-
     const inbox = document.createElement('li');
     inbox.innerText = 'Inbox';
     const today = document.createElement('li');
@@ -17,7 +16,24 @@ function createNav(){
     controls.appendChild(today);
     controls.appendChild(thisWeek);
 
+    const projects = document.createElement('ul'); 
+    projects.id = 'projects';
+    const projectTitle = document.createElement('li');
+    projectTitle.innerText = 'Projects';
+    projectTitle.id = 'projectTitle';
+    projectTitle.classList.add('noHover');
+    const project1 = document.createElement('li');
+    project1.innerText = 'Project 1';
+    const project2 = document.createElement('li');
+    project2.innerText = 'Project 2';
+
+    projects.appendChild(projectTitle);
+    projects.appendChild(project1);
+    projects.appendChild(project2);
+
+
     nav.appendChild(controls);
+    nav.appendChild(projects);
 
     return nav;
 }
