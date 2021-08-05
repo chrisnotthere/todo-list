@@ -1,5 +1,4 @@
 function createNav(){
-
     const nav = document.createElement('nav');
     nav.id = 'nav';
 
@@ -54,8 +53,6 @@ function createNav(){
 
     thisWeek.addEventListener('click', () => alert('thisWeek'));
 
-
-
     // projects title
     const projectTitle = document.createElement('li');
     projectTitle.innerText = 'Projects';
@@ -67,29 +64,18 @@ function createNav(){
     controls.appendChild(thisWeek);
     controls.appendChild(projectTitle);
 
-
-
-
-    //// NAV projects 
+    ////  projects 
     const projects = document.createElement('ul'); 
     projects.id = 'projects';
-
-    // const projectTitle = document.createElement('li');
-    // projectTitle.innerText = 'Projects';
-    // projectTitle.id = 'projectTitle';
-    // projectTitle.classList.add('noHover');
-
 
     let projectCounter = 0;
     // projects.appendChild(projectTitle);
     projects.appendChild(createProject('Project 1'));
-    projects.appendChild(createProject('school project'));
+    projects.appendChild(createProject('school project....'));
     projects.appendChild(createProject('job search'));
     projects.appendChild(createProject('study for test'));
 
     const projectList = document.querySelector('#projects')
-    
-    
 
     //add new project button
     const addProjectLogo = document.createElement('i');
@@ -108,22 +94,15 @@ function createNav(){
 
     addProject.addEventListener('click', () => alert('adding new project ...'));
 
-
-
     nav.appendChild(controls);
-    //nav.appendChild(projectTitle);
     nav.appendChild(projects);
     nav.appendChild(addProjectUL)
 
 
     function createProject(title){
-        // const selectProject = document.querySelector(`#${title}Project`);
-        
-        // project 1
         const project = document.createElement('li');
         project.id = projectCounter;
         const projectDiv = document.createElement('div');
-        //projectDiv.id = projectCounter;
         const projectIconDiv = document.createElement('div');
         projectIconDiv.id = 'projectIconDiv';
         const projectIcon = document.createElement('i');
@@ -144,22 +123,17 @@ function createNav(){
         project.appendChild(projectDeleteDiv);
         projectDeleteDiv.appendChild(projectDelete);
     
-        // projectTitle.addEventListener('click', () => alert(title));
         projectTitle.addEventListener('click', () => alert(project.id));
-    
         projectDeleteDiv.addEventListener('click', () => alert(`delete "${title}" project!`));
-        // projectDeleteDiv.addEventListener('click', () => alert(document.querySelector(`#${title}Project`)));
     
         projectCounter++;
         return project;
-    
     }
 
     return nav;
 }
 
 function createMain(){
-
     const main = document.createElement('main');
     main.id = 'main';
 
@@ -170,13 +144,10 @@ function createMain(){
 }
 
 export function loadMain(){
-
     document.body.appendChild(createMain());
-    //addEventListeners();
 }
 
 function createInbox(){
-
     const article = document.createElement('article');
     article.id = 'article';
 
@@ -223,13 +194,10 @@ function createInbox(){
     addTask.appendChild(addTaskDescription);
     addTaskUL.appendChild(addTask);
 
-
     content.appendChild(todoTitleUL)
     content.appendChild(todoDisplay);
     article.appendChild(content);
     content.appendChild(addTaskUL);
-
-
 
 
     function createTodo(title, description, dueDate){
@@ -237,7 +205,6 @@ function createInbox(){
         const todo = document.createElement('li');
         todo.classList.add('userTask');
         todo.id = todoCounter;
-        todoCounter++;
         const todoCheckboxDiv = document.createElement('div');
         todoCheckboxDiv.id = 'todoCheckboxDiv';
         const todoCheckbox = document.createElement('i');
@@ -278,10 +245,9 @@ function createInbox(){
         todoEditDiv.addEventListener('click', () => alert('edit details of todo'));
         todoDeleteDiv.addEventListener('click', () => alert('delete this todo'));
     
+        todoCounter++;
         return todo;
     }
-
-
 
     return article;
 }
@@ -291,6 +257,4 @@ export function loadArticle(){
     document.body.appendChild(createArticle());
 
 }
-
-
 

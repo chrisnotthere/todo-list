@@ -3,11 +3,6 @@ function createHeader() {
     const header = document.createElement('header');
     header.classList.add('header');
 
-    // const logo = new Image();
-    // logo.src = Icon;
-    // logo.style.width = '100px';
-    // header.appendChild(logo);
-
     const logo = document.createElement('i');
     logo.classList.add('fas', 'fa-clipboard-list', 'fa-5x');
     logo.id = 'logo';
@@ -23,14 +18,11 @@ function createHeader() {
     }
 
 export function loadHeader(){
-
     document.body.appendChild(createHeader());
-
 
 }
 
 function createFooter(){
-
     const footer = document.createElement('footer');
     footer.classList.add('footer');
     const div1 = document.createElement('div');
@@ -45,8 +37,5 @@ function createFooter(){
 }
 
 export function loadFooter(){
-
-
     document.body.appendChild(createFooter());
 }
-
