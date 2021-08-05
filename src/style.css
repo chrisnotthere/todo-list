@@ -68,7 +68,7 @@ color: var(--black);
   margin-right: 1rem;
 }
 
-#project1{
+#project{
   /* display: flex;
   justify-content: space-between; */
   display: grid;
@@ -86,6 +86,11 @@ color: var(--black);
   display: grid;
   grid-template-columns: 20% 70% 10%;
 
+}
+
+#projects li{
+  display: grid;
+  grid-template-columns: 20% 70% 10%;
 }
 
 #project2Icon{
@@ -119,9 +124,14 @@ color: var(--black);
   margin-left: 1rem;
 }
 
+/* ///////////////////////////////////////////////////////////// */
 #projectTitle{
-  margin-left: 0 !important;
+  /* margin-left: 0 !important; */
+  font-family: sans-serif;
+  /* font-size: 2rem; */
 }
+
+
 
 #addProject{
   display: flex;
@@ -176,13 +186,17 @@ color: var(--black);
 }
 
 #todoTitleSort{
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
+  align-self:center;
 }
 
 #todoTitleUL{
-  display: flex;
+  /* display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: space-between; */
+  display: grid;
+  grid-template-columns: 84% 10%;
+  /* align-self: end; */
 }
 
 
