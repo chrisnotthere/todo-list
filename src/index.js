@@ -8,10 +8,9 @@ import './style.css';
 import Icon from './images/notepad.png'
 import printMe from './print.js';
 import {loadHeader, loadFooter} from './header-footer';
-import {loadNav, loadMain, loadArticle} from './main-content';
+import {loadMain} from './UI';
 
 
 loadHeader();
 loadMain();
-//loadNav();
 loadFooter();

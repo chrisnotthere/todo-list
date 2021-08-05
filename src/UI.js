@@ -20,6 +20,8 @@ function createNav(){
     inbox.appendChild(inboxIcon);
     inbox.appendChild(inboxTitle);
 
+    inbox.addEventListener('click', () => alert('inbox'));
+
     // today
     const today = document.createElement('li');
     today.id = 'today';
@@ -34,6 +36,8 @@ function createNav(){
     today.appendChild(todayIcon);
     today.appendChild(todayTitle);
 
+    today.addEventListener('click', () => alert('today'));
+
     // this week
     const thisWeek = document.createElement('li');
     thisWeek.id = 'thisWeek';
@@ -47,6 +51,9 @@ function createNav(){
     thisWeekTitle.innerText = 'This Week';
     thisWeek.appendChild(thisWeekIcon);
     thisWeek.appendChild(thisWeekTitle);
+
+    thisWeek.addEventListener('click', () => alert('thisWeek'));
+
 
     controls.appendChild(inbox);
     controls.appendChild(today);
@@ -80,6 +87,8 @@ function createNav(){
     project1.appendChild(project1Title);
     project1.appendChild(project1Delete);
 
+    project1Title.addEventListener('click', () => alert('project 1 ...'));
+
 
     // project 2
     const project2 = document.createElement('li');
@@ -100,6 +109,10 @@ function createNav(){
     project2.appendChild(project2Title);
     project2.appendChild(project2Delete);
 
+    project2Title.addEventListener('click', () => alert('project 2 ...'));
+
+
+
     projects.appendChild(projectTitle);
     projects.appendChild(project1);
     projects.appendChild(project2);
@@ -119,6 +132,8 @@ function createNav(){
     addProject.appendChild(addProjectDescription);
     addProjectUL.appendChild(addProject);
 
+    addProject.addEventListener('click', () => alert('adding new project ...'));
+
 
 
     nav.appendChild(controls);
@@ -126,11 +141,6 @@ function createNav(){
     nav.appendChild(addProjectUL)
 
     return nav;
-}
-
-export function loadNav(){
-
-    document.body.appendChild(createNav());
 }
 
 function createMain(){
@@ -147,6 +157,7 @@ function createMain(){
 export function loadMain(){
 
     document.body.appendChild(createMain());
+    //addEventListeners();
 }
 
 function createInbox(){
@@ -174,29 +185,49 @@ function createInbox(){
     todoDisplay.id = 'todoDisplay';
 
     // todo1
+    //checkbox btn
     const todo1 = document.createElement('li');
     todo1.classList.add('userTask');
-    const todo1Icon = document.createElement('i');
-    todo1Icon.classList.add('far', 'fa-square');
-    todo1Icon.id = 'todo1Icon';
-    //edit and delete btns
+    const todo1CheckboxDiv = document.createElement('div');
+    todo1CheckboxDiv.id = 'todo1CheckboxDiv';
+    const todo1Checkbox = document.createElement('i');
+    todo1Checkbox.classList.add('far', 'fa-square');
+    todo1Checkbox.id = 'todo1Checkbox';
+    //edit btn
+    const todo1EditDiv = document.createElement('div');
+    todo1EditDiv.id = 'todo1EditDiv';
     const todo1Edit = document.createElement('i');
     todo1Edit.classList.add('far', 'fa-edit');
     todo1Edit.id = 'todo1Edit';
+    //delete btn
+    const todo1DeleteDiv = document.createElement('div');
+    todo1DeleteDiv.id = 'todo1DeleteDiv';
     const todo1Delete = document.createElement('i');
     todo1Delete.classList.add('far', 'fa-trash-alt');
     todo1Delete.id = 'todo1Delete';
+    //description
     const todoDescription = document.createElement('div');
     todoDescription.innerText = 'todo1';
     todoDescription.classList.add('todoDecription');
+    //due date
     const todoDueDate = document.createElement('div');
     todoDueDate.innerText = '08-10-2021';
     todoDueDate.classList.add('todoDueDate');
-    todo1.appendChild(todo1Icon);
+    todo1CheckboxDiv.appendChild(todo1Checkbox);
+    todo1.appendChild(todo1CheckboxDiv);
     todo1.appendChild(todoDescription);
-    todo1.appendChild(todo1Edit);
-    todo1.appendChild(todo1Delete);
+    todo1EditDiv.appendChild(todo1Edit);
+    todo1.appendChild(todo1EditDiv);
+    todo1DeleteDiv.appendChild(todo1Delete);
+    todo1.appendChild(todo1DeleteDiv);
     todo1.appendChild(todoDueDate);
+
+    todoDescription.addEventListener('click', () => alert('todo 1 task details'));
+    todo1CheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
+    todo1EditDiv.addEventListener('click', () => alert('edit details of todo'));
+    todo1DeleteDiv.addEventListener('click', () => alert('delete this todo'));
+
+    //todo1Checkbox.onclick = function (){alert('cross out this todo')};
 
     // todo2
     const todo2 = document.createElement('li');
@@ -293,4 +324,17 @@ export function loadArticle(){
     document.body.appendChild(createArticle());
 
 }
+
+// function addEventListeners(){
+
+//     const inbox = document.querySelector('#inbox');
+//     inbox.addEventListener('click', () => alert('inbox'));
+
+//     const today = document.querySelector('#today');
+//     today.addEventListener('click', () => alert('today'));
+
+//     const thisWeek = document.querySelector('#thisWeek');
+//     thisWeek.addEventListener('click', () => alert('thisWeek'));
+
+// }
 
