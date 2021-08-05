@@ -6,6 +6,17 @@
 } */
 
 :root{
+  --green1: #d9ed92;
+  --green2: #b5e48c;
+  --green3: #99d98c;
+  --green4: #76c893;
+  --blue1: #52b69a;
+  --blue2: #34a0a4;
+  --blue3: #168aad;
+  --blue4: #1a759f;
+  --blue5: #1e6091;
+  --blue6: #184e77;
+
   --purp: #950740;
   --light-purp: #c3073f;
   --dark-purp: #6f2232;
@@ -15,16 +26,16 @@
 }
 
 body{
-margin: 0;
+  margin: 0;
 }
 
 .header {
-display: flex;
-align-items: center;
-background-color: var(--dark-purp);
-height: 14vh;
-top: 0; left: 0; right: 0;
-color: var(--black);
+  display: flex;
+  align-items: center;
+  background-color: var(--blue5);
+  height: 14vh;
+  top: 0; left: 0; right: 0;
+  color: var(--black);
 
 }
 
@@ -34,7 +45,7 @@ color: var(--black);
 }
 
 #nav{
-  background-color: var(--purp) ;
+  background-color: var(--blue3) ;
   flex: 0 0 20vw;
   order: -1;
   padding: 1rem;
@@ -67,6 +78,8 @@ color: var(--black);
 #projects li{
   display: grid;
   grid-template-columns: 20% 70% 10%;
+  border-radius: 2rem;
+  border: 1pt dotted var(--blue6);
 }
 
 .noHover{
@@ -88,7 +101,7 @@ color: var(--black);
 }
 
 #nav li:hover{
-  background: var(--light-purp);
+  background: var(--blue4);
   color: black;
 }
 
@@ -111,17 +124,18 @@ color: var(--black);
 #article{
   display: flex;
   justify-content: center;
-  background: var(--grey);
+  background: var(--green4);
   padding: 3rem;
   flex: 1;
   color: var(--black);
 }
 
 #content{
-  background-color: var(--light-purp) ;
+  background-color: var(--green2) ;
   height: 80%;
   width: 90%;
   padding: 1rem;
+  border-radius: 1rem;
 }
 
 #content ul{
@@ -138,7 +152,7 @@ color: var(--black);
 }
 
 #content li:hover{
-  background: var(--light-purp);
+  background: var(--green3);
 }
 
 #content ul{
@@ -159,9 +173,13 @@ color: var(--black);
   grid-template-columns: 75% 15%;
 }
 
+#todoDisplay li{
+  border-radius: 0.75rem;
+  border-bottom: 1px solid var(--green4);
+}
 
 #todoDisplay li:hover{
-  background-color: var(--purp);
+  background-color: var(--green3);
   color: black;
 }
 
@@ -189,13 +207,14 @@ color: var(--black);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--dark-purp);
+  background-color: var(--blue2);
   padding: 1rem;
 }
 
 #title{
   font-size: 4rem;
-  font-family: 'MyFont', sans-serif;
+  /* font-family: 'MyFont', sans-serif; */
+  font-family: Oxygen, Ubuntu, 'Helvetica Neue', sans-serif;
   margin-left: 4rem;
 }
 

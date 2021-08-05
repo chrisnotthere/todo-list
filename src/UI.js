@@ -1,3 +1,84 @@
+import Project from './project';
+import Todo from './todo';
+import ProjectList from './projectList'
+
+////test project/todos
+let allProjectsList = new ProjectList('allProjectsList');
+
+export let testProject = new Project('example project');
+let testProject2 = new Project('job search');
+let testProject3 = new Project('study for test');
+
+let testTodo1 = new Todo('testTodo', 'do this and that and that', 'tomorrow');
+let testTodo2 = new Todo('another todo', 'description', '08-08-2021');
+let testTodo3 = new Todo('example 3', 'blahblahblah', '08--15-2021');
+let testTodo4 = new Todo('build resume', 'do this and that and that', 'tomorrow');
+let testTodo5 = new Todo('cold call companies', 'description', '08-08-2021');
+let testTodo6 = new Todo('ask around for job openings', 'blahblahblah', '08--15-2021');
+let testTodo7 = new Todo('make flash cards', 'do this and that and that', 'tomorrow');
+let testTodo8 = new Todo('get extra stong coffee', 'description', '08-08-2021');
+let testTodo9 = new Todo('study all night', 'blahblahblah', '08--15-2021');
+
+testProject.addTodo(testTodo1);
+testProject.addTodo(testTodo2);
+testProject.addTodo(testTodo3);
+testProject2.addTodo(testTodo4);
+testProject2.addTodo(testTodo5);
+testProject2.addTodo(testTodo6);
+testProject3.addTodo(testTodo7);
+testProject3.addTodo(testTodo8);
+testProject3.addTodo(testTodo9);
+
+allProjectsList.addProject(testProject);
+allProjectsList.addProject(testProject2);
+allProjectsList.addProject(testProject3);
+
+console.log(allProjectsList);
+////
+
+
+function createHeader() {
+    const header = document.createElement('header');
+    header.classList.add('header');
+
+    const logo = document.createElement('i');
+    logo.classList.add('fas', 'fa-clipboard-list', 'fa-5x');
+    logo.id = 'logo';
+    logo.width = '200px';
+    header.appendChild(logo);
+
+    const titleDiv = document.createElement('div');
+    titleDiv.id = 'title';
+    titleDiv.innerText = 'ToDo List';
+    header.appendChild(titleDiv);
+
+    return header;
+    }
+
+export function loadHeader(){
+    document.body.appendChild(createHeader());
+
+}
+
+function createFooter(){
+    const footer = document.createElement('footer');
+    footer.classList.add('footer');
+    const div1 = document.createElement('div');
+    const div2 = document.createElement('div');
+
+    div1.innerHTML = 'ToDo List app &#9400; 2021';
+    div2.textContent = 'created by chrisnotthere (github link)';
+    footer.appendChild(div1);
+    footer.appendChild(div2);
+
+    return footer
+}
+
+export function loadFooter(){
+    document.body.appendChild(createFooter());
+}
+
+
 function createNav(){
     const nav = document.createElement('nav');
     nav.id = 'nav';
@@ -70,10 +151,11 @@ function createNav(){
 
     let projectCounter = 0;
     // projects.appendChild(projectTitle);
-    projects.appendChild(createProject('Project 1'));
-    projects.appendChild(createProject('school project....'));
-    projects.appendChild(createProject('job search'));
-    projects.appendChild(createProject('study for test'));
+
+
+    projects.appendChild(createProject(allProjectsList.getProjects()[0].getName()));
+    projects.appendChild(createProject(allProjectsList.getProjects()[1].getName()));
+    projects.appendChild(createProject(allProjectsList.getProjects()[2].getName()));
 
     const projectList = document.querySelector('#projects')
 
@@ -123,7 +205,11 @@ function createNav(){
         project.appendChild(projectDeleteDiv);
         projectDeleteDiv.appendChild(projectDelete);
     
-        projectTitle.addEventListener('click', () => alert(project.id));
+        //projectTitle.addEventListener('click', () => alert(project.id));
+        projectTitle.addEventListener('click', () => loadMain(testProject2));
+
+
+
         projectDeleteDiv.addEventListener('click', () => alert(`delete "${title}" project!`));
     
         projectCounter++;
@@ -133,18 +219,39 @@ function createNav(){
     return nav;
 }
 
-function createMain(){
+// function createMain(project){
+//     const main = document.createElement('main');
+//     main.id = 'main';
+
+//     main.appendChild(createNav());
+//     //main.appendChild(createInbox());
+//     main.appendChild(createProject(project));
+//     //alert(testProject.getName());
+
+//     return main;
+// }
+
+
+function createMain(project){
     const main = document.createElement('main');
     main.id = 'main';
 
     main.appendChild(createNav());
-    main.appendChild(createInbox());
+    main.appendChild(createProject(project));
 
     return main;
 }
 
-export function loadMain(){
-    document.body.appendChild(createMain());
+export function loadMain(project){
+    //document.body.innerHTML = '';
+
+    createHeader();
+
+    //const main = document.getElementById('main');
+    // main.innerHTML = '';
+    //article.innerHTML = '';
+
+    document.body.appendChild(createMain(project));
 }
 
 function createInbox(){
@@ -250,6 +357,115 @@ function createInbox(){
     }
 
     return article;
+}
+
+function createProject(project){
+
+    //console.log(project);
+
+    const article = document.createElement('article');
+    article.id = 'article';
+
+    const content = document.createElement('div');
+    content.id = 'content';
+
+    //// project content header
+    const todoTitleUL = document.createElement('ul');
+    todoTitleUL.id = 'todoTitleUL';
+    const todoTitle = document.createElement('div');
+    todoTitle.innerText = project.getName();
+    todoTitle.id = 'todoTitle';
+    const todoTitleSort = document.createElement('div');
+    todoTitleSort.innerText = 'Due Date';
+    todoTitleSort.id = 'todoTitleSort';
+    todoTitleUL.appendChild(todoTitle);
+    todoTitleUL.appendChild(todoTitleSort);
+
+    todoTitleSort.addEventListener('click', () => alert('sort the todo list by date'));
+///////////////////////////////////////////////////////////////////////////////////////
+    // main content TODO list items
+    const todoDisplay = document.createElement('ul'); 
+    todoDisplay.id = 'todoDisplay';
+    let todoCounter = 0;
+
+    todoDisplay.appendChild(createTodo(project.getTodos()[0].getName(), project.getTodos()[0].getDescription(), project.getTodos()[0].getDueDate()));
+    todoDisplay.appendChild(createTodo(project.getTodos()[1].getName(), project.getTodos()[1].getDescription(), project.getTodos()[1].getDueDate()));
+    todoDisplay.appendChild(createTodo(project.getTodos()[2].getName(), project.getTodos()[2].getDescription(), project.getTodos()[2].getDueDate()));
+
+    // Add task btn
+    const addLogoDiv = document.createElement('div');
+    addLogoDiv.id = 'addLogoDiv';
+    const addLogo = document.createElement('i');
+    addLogo.classList.add('fas', 'fa-plus', 'fa');
+    addLogo.id = 'addLogo';
+    const addTaskUL = document.createElement('ul'); 
+    addTaskUL.id = 'addTaskUL';
+    const addTask = document.createElement('li');
+    addTask.id = 'addTask';
+    const addTaskDescription = document.createElement('div'); 
+    addTaskDescription.innerText = 'Add Task';
+    addLogoDiv.appendChild(addLogo);
+    addTask.appendChild(addLogoDiv);
+    addTask.appendChild(addTaskDescription);
+    addTaskUL.appendChild(addTask);
+
+    content.appendChild(todoTitleUL)
+    content.appendChild(todoDisplay);
+    article.appendChild(content);
+    content.appendChild(addTaskUL);
+
+
+    function createTodo(title, description, dueDate){
+        //checkbox btn
+        const todo = document.createElement('li');
+        todo.classList.add('userTask');
+        todo.id = todoCounter;
+        const todoCheckboxDiv = document.createElement('div');
+        todoCheckboxDiv.id = 'todoCheckboxDiv';
+        const todoCheckbox = document.createElement('i');
+        todoCheckbox.classList.add('far', 'fa-square');
+        todoCheckbox.id = 'todoCheckbox';
+        //edit btn
+        const todoEditDiv = document.createElement('div');
+        todoEditDiv.id = 'todoEditDiv';
+        const todoEdit = document.createElement('i');
+        todoEdit.classList.add('far', 'fa-edit');
+        todoEdit.id = 'todoEdit';
+        //delete btn
+        const todoDeleteDiv = document.createElement('div');
+        todoDeleteDiv.id = 'todoDeleteDiv';
+        const todoDelete = document.createElement('i');
+        todoDelete.classList.add('far', 'fa-trash-alt');
+        todoDelete.id = 'todoDelete';
+        //description
+        const todoDescription = document.createElement('div');
+        todoDescription.innerText = title;
+        todoDescription.classList.add('todoDecription');
+        //due date
+        const todoDueDate = document.createElement('div');
+        todoDueDate.innerText = dueDate;
+        todoDueDate.classList.add('todoDueDate');
+    
+        todoCheckboxDiv.appendChild(todoCheckbox);
+        todo.appendChild(todoCheckboxDiv);
+        todo.appendChild(todoDescription);
+        todoEditDiv.appendChild(todoEdit);
+        todo.appendChild(todoEditDiv);
+        todoDeleteDiv.appendChild(todoDelete);
+        todo.appendChild(todoDeleteDiv);
+        todo.appendChild(todoDueDate);
+    
+        todoDescription.addEventListener('click', () => alert(description));
+        todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
+        todoEditDiv.addEventListener('click', () => alert('edit details of todo'));
+        todoDeleteDiv.addEventListener('click', () => alert('delete this todo'));
+    
+        todoCounter++;
+        return todo;
+    }
+
+
+    return article
 }
 
 export function loadArticle(){
