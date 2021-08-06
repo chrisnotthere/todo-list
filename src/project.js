@@ -27,7 +27,14 @@ export default class Project{
 
     }
 
-    deleteTodo(todoName){
+    deleteTodo(oldTodo){
+
+        const foundIndex = this.todos.indexOf(({oldTodo}) => oldTodo === oldTodo.name);
+
+        this.todos = this.todos.filter((_, index) => index !== foundIndex);
+
+
+        console.log(`deleting....${foundIndex}`);
 
     }
 

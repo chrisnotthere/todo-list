@@ -204,12 +204,13 @@ function createNav(){
         project.appendChild(projectDeleteDiv);
         projectDeleteDiv.appendChild(projectDelete);
     
-
         // dynamically insert project into loadContent function
         let resultObject = allProjectsList.getProjects().find(o => o.name === title);
 
+        //show project contents
         projectTitle.addEventListener('click', () => loadContent(resultObject));
         projectIconDiv.addEventListener('click', () => loadContent(resultObject));
+
         projectDeleteDiv.addEventListener('click', () => alert(`delete "${title}" project!`));
     
         projectCounter++;
@@ -222,10 +223,8 @@ function createNav(){
 function createMain(project){
     const main = document.createElement('main');
     main.id = 'main';
-
     main.appendChild(createNav());
     main.appendChild(createProject(project));
-
     return main;
 }
 
@@ -237,7 +236,6 @@ function loadContent(project){
     //clear article
     const article = document.querySelector('#article');
     article.remove();
-
     //create new article, appeand it to main
     const main = document.querySelector('main');
     main.appendChild(createProject(project));
@@ -271,9 +269,10 @@ function createProject(project){
     todoDisplay.id = 'todoDisplay';
     let todoCounter = 0;
 
-    todoDisplay.appendChild(createTodo(project.getTodos()[0].getName(), project.getTodos()[0].getDescription(), project.getTodos()[0].getDueDate()));
-    todoDisplay.appendChild(createTodo(project.getTodos()[1].getName(), project.getTodos()[1].getDescription(), project.getTodos()[1].getDueDate()));
-    todoDisplay.appendChild(createTodo(project.getTodos()[2].getName(), project.getTodos()[2].getDescription(), project.getTodos()[2].getDueDate()));
+    //get project todos and append to todoDisplay
+    project.getTodos().forEach(element => {
+        todoDisplay.appendChild(createTodo(element.getName(), element.getDescription(), element.getDueDate()));
+    });
 
     // Add task btn
     const addLogoDiv = document.createElement('div');
@@ -292,30 +291,18 @@ function createProject(project){
     addTask.appendChild(addTaskDescription);
     addTaskUL.appendChild(addTask);
 
-    //////////////////////ADD NEW TODO/////////////////////////////////////////////
-
-    //need to create a form which takes: title, description, dueDate
-
-
     //create form to get users new todo info
-    addTask.addEventListener('click', (project) => {
-        todoDisplay.appendChild(gatherTodoInfo(project));
+    addTask.addEventListener('click', () => {
+        todoDisplay.appendChild(gatherTodoInfo());
         //alert('click');
-
     });
-
-
-////////////////////////////////////////////////////////////////////////////
 
     content.appendChild(todoTitleUL)
     content.appendChild(todoDisplay);
     article.appendChild(content);
     content.appendChild(addTaskUL);
 
-
-
-    function gatherTodoInfo(project){
-
+    function gatherTodoInfo(){
         addTask.classList.add('hide');
         
         const todoForm = document.createElement('form');
@@ -359,22 +346,16 @@ function createProject(project){
         formBtns.appendChild(acceptIconDiv)
         formBtns.appendChild(cancelIconDiv)
         todoForm.appendChild(formBtns);
-//////////////////////////////////////////////////////////////////////////////////////////////
+
         //add todo to the project when click accept
-        acceptIconDiv.addEventListener('click', (project) => {
+        acceptIconDiv.addEventListener('click', () => {
             
-            //need to add to actual object//
             //find current project, add todo to that project
-            alert(project);
+            const currentProjectTitle = document.querySelector('#todoTitle');
+            let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle.innerText);
 
-
-            // allProjectsList.getProjects().forEach(element => {
-            //     projects.appendChild(createProject(element.getName()));
-            // });
-
-
-
-
+            let newTodo = new Todo(todoTitleForm.value, todoDescriptionForm.value, dueDateForm.value);
+            currentProject.addTodo(newTodo);
             
             //UI-stuff
             todoForm.classList.add('hide');
@@ -388,10 +369,8 @@ function createProject(project){
             alert(`cancel`);
         });
 
-
         return todoForm;
     }
-
 
     function createTodo(title, description, dueDate){
         //checkbox btn
@@ -436,19 +415,48 @@ function createProject(project){
         todoDescription.addEventListener('click', () => alert(description));
         todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
         todoEditDiv.addEventListener('click', () => alert('edit details of todo'));
-        todoDeleteDiv.addEventListener('click', () => alert('delete this todo'));
+
+///////////////////////DELETE TODO BTN////////////////////////////////////////
+        // todoDeleteDiv.addEventListener('click', () => alert('delete this todo'));
+        todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
+
+        
+
+
     
         todoCounter++;
         return todo;
     }
-
-
     return article
 }
 
 export function loadArticle(){
-
     document.body.appendChild(createArticle());
-
 }
 
+function deleteTodo(todoTitle){
+
+    ///////////////////////////////////////////////////////////////////////
+
+    //find current project and current todo
+    //then remove todo from project
+
+    // alert(todoTitle);
+    
+    const currentProjectTitle = document.querySelector('#todoTitle').innerText;
+    let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle);
+
+    console.table(currentProject.getTodos());
+
+    let currentTodo = currentProject.getTodos().filter(todo => {
+        return todo.name === todoTitle
+    })
+
+    console.table(currentTodo);
+
+    currentProject.deleteTodo(currentTodo);
+
+    console.table(currentProject.getTodos());
+
+
+}
