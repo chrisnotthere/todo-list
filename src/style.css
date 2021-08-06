@@ -191,6 +191,11 @@ body{
 
 }
 
+.hide{
+  display: none !important;
+}
+
+
 #addTask{
   display: flex;
   align-items: center;
@@ -223,3 +228,18 @@ body{
   margin-left: 5rem;
 }
 
+#todoForm{
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem
+}
+
+#todoForm textarea{
+  margin: 0.5rem;
+  width: 50%;
+
+}
+
+#formBtns i{
+  margin: 0.75rem;
+}

@@ -244,110 +244,6 @@ function loadContent(project){
 
 }
 
-function createInbox(){
-    const article = document.createElement('article');
-    article.id = 'article';
-
-    const content = document.createElement('div');
-    content.id = 'content';
-
-    //// inbox content header
-    const todoTitleUL = document.createElement('ul');
-    todoTitleUL.id = 'todoTitleUL';
-    const todoTitle = document.createElement('div');
-    todoTitle.innerText = 'Inbox';
-    todoTitle.id = 'todoTitle';
-    const todoTitleSort = document.createElement('div');
-    todoTitleSort.innerText = 'Due Date';
-    todoTitleSort.id = 'todoTitleSort';
-    todoTitleUL.appendChild(todoTitle);
-    todoTitleUL.appendChild(todoTitleSort);
-
-    todoTitleSort.addEventListener('click', () => alert('sort the todo list by date'));
-
-    // main content TODO list items
-    const todoDisplay = document.createElement('ul'); 
-    todoDisplay.id = 'todoDisplay';
-    let todoCounter = 0;
-    todoDisplay.appendChild(createTodo('test todo', 'this is a description, blah blah', '08-05-2021'));
-    todoDisplay.appendChild(createTodo('todo2', 'blah blah', '08-08-2021'));
-    todoDisplay.appendChild(createTodo('laundry', 'washing and folding', '08-11-2021'));
-    todoDisplay.appendChild(createTodo('feed cats', 'very important!!', 'every day'));
-
-    // Add task btn
-    const addLogoDiv = document.createElement('div');
-    addLogoDiv.id = 'addLogoDiv';
-    const addLogo = document.createElement('i');
-    addLogo.classList.add('fas', 'fa-plus', 'fa');
-    addLogo.id = 'addLogo';
-    const addTaskUL = document.createElement('ul'); 
-    addTaskUL.id = 'addTaskUL';
-    const addTask = document.createElement('li');
-    addTask.id = 'addTask';
-    const addTaskDescription = document.createElement('div'); 
-    addTaskDescription.innerText = 'Add Task';
-    addLogoDiv.appendChild(addLogo);
-    addTask.appendChild(addLogoDiv);
-    addTask.appendChild(addTaskDescription);
-    addTaskUL.appendChild(addTask);
-
-    content.appendChild(todoTitleUL)
-    content.appendChild(todoDisplay);
-    article.appendChild(content);
-    content.appendChild(addTaskUL);
-
-
-    function createTodo(title, description, dueDate){
-        //checkbox btn
-        const todo = document.createElement('li');
-        todo.classList.add('userTask');
-        todo.id = todoCounter;
-        const todoCheckboxDiv = document.createElement('div');
-        todoCheckboxDiv.id = 'todoCheckboxDiv';
-        const todoCheckbox = document.createElement('i');
-        todoCheckbox.classList.add('far', 'fa-square');
-        todoCheckbox.id = 'todoCheckbox';
-        //edit btn
-        const todoEditDiv = document.createElement('div');
-        todoEditDiv.id = 'todoEditDiv';
-        const todoEdit = document.createElement('i');
-        todoEdit.classList.add('far', 'fa-edit');
-        todoEdit.id = 'todoEdit';
-        //delete btn
-        const todoDeleteDiv = document.createElement('div');
-        todoDeleteDiv.id = 'todoDeleteDiv';
-        const todoDelete = document.createElement('i');
-        todoDelete.classList.add('far', 'fa-trash-alt');
-        todoDelete.id = 'todoDelete';
-        //description
-        const todoDescription = document.createElement('div');
-        todoDescription.innerText = title;
-        todoDescription.classList.add('todoDecription');
-        //due date
-        const todoDueDate = document.createElement('div');
-        todoDueDate.innerText = dueDate;
-        todoDueDate.classList.add('todoDueDate');
-    
-        todoCheckboxDiv.appendChild(todoCheckbox);
-        todo.appendChild(todoCheckboxDiv);
-        todo.appendChild(todoDescription);
-        todoEditDiv.appendChild(todoEdit);
-        todo.appendChild(todoEditDiv);
-        todoDeleteDiv.appendChild(todoDelete);
-        todo.appendChild(todoDeleteDiv);
-        todo.appendChild(todoDueDate);
-    
-        todoDescription.addEventListener('click', () => alert(description));
-        todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
-        todoEditDiv.addEventListener('click', () => alert('edit details of todo'));
-        todoDeleteDiv.addEventListener('click', () => alert('delete this todo'));
-    
-        todoCounter++;
-        return todo;
-    }
-
-    return article;
-}
 
 function createProject(project){
     const article = document.createElement('article');
@@ -396,10 +292,105 @@ function createProject(project){
     addTask.appendChild(addTaskDescription);
     addTaskUL.appendChild(addTask);
 
+    //////////////////////ADD NEW TODO/////////////////////////////////////////////
+
+    //need to create a form which takes: title, description, dueDate
+
+
+    //create form to get users new todo info
+    addTask.addEventListener('click', (project) => {
+        todoDisplay.appendChild(gatherTodoInfo(project));
+        //alert('click');
+
+    });
+
+
+////////////////////////////////////////////////////////////////////////////
+
     content.appendChild(todoTitleUL)
     content.appendChild(todoDisplay);
     article.appendChild(content);
     content.appendChild(addTaskUL);
+
+
+
+    function gatherTodoInfo(project){
+
+        addTask.classList.add('hide');
+        
+        const todoForm = document.createElement('form');
+        todoForm.id = 'todoForm';
+
+        const todoTitleForm = document.createElement('textArea');
+        todoTitleForm.id = 'todoTitleForm';
+        todoTitleForm.placeholder = 'Title: Laundry';
+        todoTitleForm.required = true;
+
+        const todoDescriptionForm = document.createElement('textArea');
+        todoDescriptionForm.id = 'todoTitleForm';
+        todoDescriptionForm.placeholder = 'Details: fold laundry at 4pm';
+        todoDescriptionForm.required = true;
+
+        const dueDateForm = document.createElement('textArea');
+        dueDateForm.id = 'dueDateForm';
+        dueDateForm.placeholder = '08-06-2021';
+        dueDateForm.required = false;
+
+        const formBtns = document.createElement('div');
+        formBtns.id = 'formBtns';
+
+        const acceptIconDiv = document.createElement('i');
+        acceptIconDiv.id = 'acceptIconDiv';
+        const acceptIcon = document.createElement('i');
+        acceptIcon.classList.add('fas', 'fa-check', 'fa-2x');
+        acceptIconDiv.id = 'acceptIconDiv';
+        acceptIconDiv.appendChild(acceptIcon);
+
+        const cancelIconDiv = document.createElement('i');
+        cancelIconDiv.id = 'cancelIconDiv';
+        const cancelIcon = document.createElement('i');
+        cancelIcon.classList.add('fas', 'fa-times', 'fa-2x');
+        cancelIcon.id = 'cancelIcon';
+        cancelIconDiv.appendChild(cancelIcon);
+
+        todoForm.appendChild(todoTitleForm);
+        todoForm.appendChild(todoDescriptionForm);
+        todoForm.appendChild(dueDateForm);
+        formBtns.appendChild(acceptIconDiv)
+        formBtns.appendChild(cancelIconDiv)
+        todoForm.appendChild(formBtns);
+//////////////////////////////////////////////////////////////////////////////////////////////
+        //add todo to the project when click accept
+        acceptIconDiv.addEventListener('click', (project) => {
+            
+            //need to add to actual object//
+            //find current project, add todo to that project
+            alert(project);
+
+
+            // allProjectsList.getProjects().forEach(element => {
+            //     projects.appendChild(createProject(element.getName()));
+            // });
+
+
+
+
+            
+            //UI-stuff
+            todoForm.classList.add('hide');
+            addTask.classList.remove('hide');
+            todoDisplay.appendChild(createTodo(todoTitleForm.value, todoDescriptionForm.value, dueDateForm.value));
+        });
+        
+        //cancel add todo when click cancel
+        cancelIconDiv.addEventListener('click', () => {
+    
+            alert(`cancel`);
+        });
+
+
+        return todoForm;
+    }
 
 
     function createTodo(title, description, dueDate){
