@@ -7,7 +7,7 @@ let allProjectsList = new ProjectList('allProjectsList');
 
 export let testProject = new Project('example project');
 let testProject2 = new Project('job search');
-let testProject3 = new Project('study for test');
+let testProject3 = new Project('study for final');
 
 let testTodo1 = new Todo('testTodo', 'do this and that and that', 'tomorrow');
 let testTodo2 = new Todo('another todo', 'description', '08-08-2021');
@@ -33,7 +33,7 @@ allProjectsList.addProject(testProject);
 allProjectsList.addProject(testProject2);
 allProjectsList.addProject(testProject3);
 
-console.log(allProjectsList);
+
 ////
 
 
@@ -150,12 +150,11 @@ function createNav(){
     projects.id = 'projects';
 
     let projectCounter = 0;
-    // projects.appendChild(projectTitle);
 
-
-    projects.appendChild(createProject(allProjectsList.getProjects()[0].getName()));
-    projects.appendChild(createProject(allProjectsList.getProjects()[1].getName()));
-    projects.appendChild(createProject(allProjectsList.getProjects()[2].getName()));
+    //foreach project in projectList, append to 'projects' nav ul
+    allProjectsList.getProjects().forEach(element => {
+        projects.appendChild(createProject(element.getName()));
+    });
 
     const projectList = document.querySelector('#projects')
 
@@ -205,11 +204,12 @@ function createNav(){
         project.appendChild(projectDeleteDiv);
         projectDeleteDiv.appendChild(projectDelete);
     
-        //projectTitle.addEventListener('click', () => alert(project.id));
-        projectTitle.addEventListener('click', () => loadMain(testProject2));
 
+        // dynamically insert project into loadContent function
+        let resultObject = allProjectsList.getProjects().find(o => o.name === title);
 
-
+        projectTitle.addEventListener('click', () => loadContent(resultObject));
+        projectIconDiv.addEventListener('click', () => loadContent(resultObject));
         projectDeleteDiv.addEventListener('click', () => alert(`delete "${title}" project!`));
     
         projectCounter++;
@@ -218,19 +218,6 @@ function createNav(){
 
     return nav;
 }
-
-// function createMain(project){
-//     const main = document.createElement('main');
-//     main.id = 'main';
-
-//     main.appendChild(createNav());
-//     //main.appendChild(createInbox());
-//     main.appendChild(createProject(project));
-//     //alert(testProject.getName());
-
-//     return main;
-// }
-
 
 function createMain(project){
     const main = document.createElement('main');
@@ -243,15 +230,18 @@ function createMain(project){
 }
 
 export function loadMain(project){
-    //document.body.innerHTML = '';
-
-    createHeader();
-
-    //const main = document.getElementById('main');
-    // main.innerHTML = '';
-    //article.innerHTML = '';
-
     document.body.appendChild(createMain(project));
+}
+
+function loadContent(project){
+    //clear article
+    const article = document.querySelector('#article');
+    article.remove();
+
+    //create new article, appeand it to main
+    const main = document.querySelector('main');
+    main.appendChild(createProject(project));
+
 }
 
 function createInbox(){
@@ -360,9 +350,6 @@ function createInbox(){
 }
 
 function createProject(project){
-
-    //console.log(project);
-
     const article = document.createElement('article');
     article.id = 'article';
 
@@ -382,7 +369,7 @@ function createProject(project){
     todoTitleUL.appendChild(todoTitleSort);
 
     todoTitleSort.addEventListener('click', () => alert('sort the todo list by date'));
-///////////////////////////////////////////////////////////////////////////////////////
+
     // main content TODO list items
     const todoDisplay = document.createElement('ul'); 
     todoDisplay.id = 'todoDisplay';
