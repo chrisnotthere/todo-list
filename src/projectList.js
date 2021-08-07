@@ -21,14 +21,13 @@ export default class ProjectList{
         return this.projects;
     }
 
-
     addProject(newProject){
         this.projects.push(newProject);
-
     }
 
-    deleteProject(project){
-
+    deleteProject(oldProject){
+        //this.todos = this.todos.filter((todo) => todo.name != oldTodo);
+        this.projects = this.projects.filter((project) => project.name != oldProject);
     }
 
 }

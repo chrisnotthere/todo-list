@@ -173,7 +173,64 @@ function createNav(){
     addProject.appendChild(addProjectDescription);
     addProjectUL.appendChild(addProject);
 
-    addProject.addEventListener('click', () => alert('adding new project ...'));
+    //bring up add project form when 'add project' is clicked
+    addProject.addEventListener('click', () => {
+        projects.appendChild(newProjectFrom())
+    });
+
+    function newProjectFrom(){
+        addProject.classList.add('hide');
+        
+        const projectForm = document.createElement('form');
+        projectForm.id = 'projectForm';
+
+        const projectTitleForm = document.createElement('textArea');
+        projectTitleForm.id = 'todoTitleForm';
+        projectTitleForm.placeholder = 'Project title: ';
+        projectTitleForm.required = true;
+
+        const projectFormBtns = document.createElement('div');
+        projectFormBtns.id = 'projectFormBtns';
+
+        const acceptProjectIconDiv = document.createElement('i');
+        acceptProjectIconDiv.id = 'acceptProjectIconDiv';
+        const acceptIcon = document.createElement('i');
+        acceptIcon.classList.add('fas', 'fa-check', 'fa-2x');
+        acceptProjectIconDiv.id = 'acceptProjectIconDiv';
+        acceptProjectIconDiv.appendChild(acceptIcon);
+
+        const cancelProjectIconDiv = document.createElement('i');
+        cancelProjectIconDiv.id = 'cancelProjectIconDiv';
+        const cancelProjectIcon = document.createElement('i');
+        cancelProjectIcon.classList.add('fas', 'fa-times', 'fa-2x');
+        cancelProjectIcon.id = 'cancelIcon';
+        cancelProjectIconDiv.appendChild(cancelProjectIcon);
+
+        projectForm.appendChild(projectTitleForm);
+        projectFormBtns.appendChild(acceptProjectIconDiv)
+        projectFormBtns.appendChild(cancelProjectIconDiv)
+        projectForm.appendChild(projectFormBtns);
+
+        //create new project
+        acceptProjectIconDiv.addEventListener('click', () => {
+            let newProject = new Project(projectTitleForm.value, []);
+            console.table(newProject);
+
+            allProjectsList.addProject(newProject);
+            console.table(allProjectsList);
+            //UI-stuff
+            refreshPage(newProject);
+        });
+        
+        //cancel add todo when click cancel
+        cancelProjectIconDiv.addEventListener('click', () => {
+            projectForm.classList.add('hide');
+            addProject.classList.remove('hide');
+        });
+
+        return projectForm;
+    }
+
 
     nav.appendChild(controls);
     nav.appendChild(projects);
@@ -211,8 +268,17 @@ function createNav(){
         projectTitle.addEventListener('click', () => loadContent(resultObject));
         projectIconDiv.addEventListener('click', () => loadContent(resultObject));
 
-        projectDeleteDiv.addEventListener('click', () => alert(`delete "${title}" project!`));
-    
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        projectDeleteDiv.addEventListener('click', () => {
+            //delete project and refresh the page...
+
+            allProjectsList.deleteProject(title);
+            refreshPage(testProject);                   //change this to default back to inbox screen... 
+
+        });
+
+
         projectCounter++;
         return project;
     }
@@ -226,6 +292,13 @@ function createMain(project){
     main.appendChild(createNav());
     main.appendChild(createProject(project));
     return main;
+}
+
+function refreshPage(project){
+    document.body.innerHTML = '';
+    loadHeader();
+    loadMain(project);
+    loadFooter();
 }
 
 export function loadMain(project){
@@ -349,7 +422,6 @@ function createProject(project){
 
         //add todo to the project when click accept
         acceptIconDiv.addEventListener('click', () => {
-            
             //find current project, add todo to that project
             const currentProjectTitle = document.querySelector('#todoTitle');
             let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle.innerText);
@@ -365,8 +437,8 @@ function createProject(project){
         
         //cancel add todo when click cancel
         cancelIconDiv.addEventListener('click', () => {
-    
-            alert(`cancel`);
+            todoForm.classList.add('hide');
+            addTask.classList.remove('hide');
         });
 
         return todoForm;
@@ -415,13 +487,10 @@ function createProject(project){
         todoDescription.addEventListener('click', () => alert(description));
         todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
         todoEditDiv.addEventListener('click', () => alert('edit details of todo'));
-
-///////////////////////DELETE TODO BTN////////////////////////////////////////
-        // todoDeleteDiv.addEventListener('click', () => alert('delete this todo'));
+        //delete todo btn
         todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
 
         
-
 
     
         todoCounter++;
@@ -435,28 +504,23 @@ export function loadArticle(){
 }
 
 function deleteTodo(todoTitle){
-
-    ///////////////////////////////////////////////////////////////////////
-
-    //find current project and current todo
-    //then remove todo from project
-
-    // alert(todoTitle);
-    
+    //find current project
     const currentProjectTitle = document.querySelector('#todoTitle').innerText;
     let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle);
+    //remove todo from project
+    currentProject.deleteTodo(todoTitle);
+    //reload the page
+    loadContent(currentProject);
+}
 
-    console.table(currentProject.getTodos());
+function addProject(projectTitle){
 
-    let currentTodo = currentProject.getTodos().filter(todo => {
-        return todo.name === todoTitle
-    })
 
-    console.table(currentTodo);
 
-    currentProject.deleteTodo(currentTodo);
+    //create a form with textarea, accept and cancel buttons
+    //accept => creates new project, hides form
+    //cancel => hides form
 
-    console.table(currentProject.getTodos());
 
 
 }

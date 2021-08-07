@@ -21,22 +21,12 @@ export default class Project{
         return this.todos;
     }
 
-
     addTodo(newTodo){
         this.todos.push(newTodo);
-
     }
 
     deleteTodo(oldTodo){
-
-        const foundIndex = this.todos.indexOf(({oldTodo}) => oldTodo === oldTodo.name);
-
-        this.todos = this.todos.filter((_, index) => index !== foundIndex);
-
-
-        console.log(`deleting....${foundIndex}`);
-
+        this.todos = this.todos.filter((todo) => todo.name != oldTodo);
     }
 
 }
-
