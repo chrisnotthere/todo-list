@@ -9,6 +9,8 @@ export let testProject = new Project('example project');
 let testProject2 = new Project('job search');
 let testProject3 = new Project('study for final');
 
+let inboxProject = new Project('Inbox');
+
 let testTodo1 = new Todo('testTodo', 'do this and that and that', 'tomorrow');
 let testTodo2 = new Todo('another todo', 'description', '08-08-2021');
 let testTodo3 = new Todo('example 3', 'blahblahblah', '08--15-2021');
@@ -268,16 +270,12 @@ function createNav(){
         projectTitle.addEventListener('click', () => loadContent(resultObject));
         projectIconDiv.addEventListener('click', () => loadContent(resultObject));
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         projectDeleteDiv.addEventListener('click', () => {
             //delete project and refresh the page...
-
             allProjectsList.deleteProject(title);
-            refreshPage(testProject);                   //change this to default back to inbox screen... 
-
+            refreshPage(inboxProject);
+            console.log(allProjectsList);                   
         });
-
 
         projectCounter++;
         return project;
@@ -374,7 +372,9 @@ function createProject(project){
     content.appendChild(todoDisplay);
     article.appendChild(content);
     content.appendChild(addTaskUL);
-
+    //////////////////////////////////////////////////////////////////////////////////
+    content.appendChild(showTodoDetails())
+////////////////////////////////////////////////////////////////////////////////////////////
     function gatherTodoInfo(){
         addTask.classList.add('hide');
         
@@ -443,7 +443,42 @@ function createProject(project){
 
         return todoForm;
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    function showTodoDetails(todo){
 
+        let todoDetailsModal = document.createElement('div');
+        todoDetailsModal.classList.add('modal');
+        todoDetailsModal.id = 'toDoDetailsModal';
+
+        let todoDetailsModalContent = document.createElement('div');
+        todoDetailsModalContent.classList.add('modal-content');
+
+        let close = document.createElement('span');
+        close.classList.add('close');
+        close.innerHTML = '&times;';
+
+        let content = document.createElement('p');
+        content.innerText = 'this is a test, todo details will go in here';
+
+        todoDetailsModalContent.appendChild(close);
+        todoDetailsModalContent.appendChild(content);
+        todoDetailsModal.appendChild(todoDetailsModalContent);
+
+        close.onclick = function() {
+            todoDetailsModal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == todoDetailsModal) {
+                todoDetailsModal.style.display = "none";
+                }
+        }
+
+        return todoDetailsModal;
+
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////
     function createTodo(title, description, dueDate){
         //checkbox btn
         const todo = document.createElement('li');
@@ -484,18 +519,26 @@ function createProject(project){
         todo.appendChild(todoDeleteDiv);
         todo.appendChild(todoDueDate);
     
-        todoDescription.addEventListener('click', () => alert(description));
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //todoDescription.addEventListener('click', () => alert(description));
+        todoDescription.addEventListener('click', () => {
+            const toDoDetailsModal = document.getElementById('toDoDetailsModal');
+            toDoDetailsModal.style.display = 'block';
+        });
+
+
+
+
+
         todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
         todoEditDiv.addEventListener('click', () => alert('edit details of todo'));
         //delete todo btn
         todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
 
-        
-
-    
         todoCounter++;
         return todo;
     }
+
     return article
 }
 
@@ -511,16 +554,4 @@ function deleteTodo(todoTitle){
     currentProject.deleteTodo(todoTitle);
     //reload the page
     loadContent(currentProject);
-}
-
-function addProject(projectTitle){
-
-
-
-    //create a form with textarea, accept and cancel buttons
-    //accept => creates new project, hides form
-    //cancel => hides form
-
-
-
 }
