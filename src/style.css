@@ -187,7 +187,7 @@ body{
 .userTask{
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: 2% 70% 2% 2% 15%;
+  grid-template-columns: 70% 2% 2% 20%;
 
 }
 

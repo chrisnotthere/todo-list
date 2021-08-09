@@ -477,11 +477,11 @@ function createProject(project){
         const todo = document.createElement('li');
         todo.classList.add('userTask');
         todo.id = todoCounter;
-        const todoCheckboxDiv = document.createElement('div');
-        todoCheckboxDiv.id = 'todoCheckboxDiv';
-        const todoCheckbox = document.createElement('i');
-        todoCheckbox.classList.add('far', 'fa-square');
-        todoCheckbox.id = 'todoCheckbox';
+        // const todoCheckboxDiv = document.createElement('div');
+        // todoCheckboxDiv.id = 'todoCheckboxDiv';
+        // const todoCheckbox = document.createElement('i');
+        // todoCheckbox.classList.add('far', 'fa-square');
+        // todoCheckbox.id = 'todoCheckbox';
         //edit btn
         const todoEditDiv = document.createElement('div');
         todoEditDiv.id = 'todoEditDiv';
@@ -503,8 +503,8 @@ function createProject(project){
         todoDueDate.innerText = dueDate;
         todoDueDate.classList.add('todoDueDate');
     
-        todoCheckboxDiv.appendChild(todoCheckbox);
-        todo.appendChild(todoCheckboxDiv);
+        // todoCheckboxDiv.appendChild(todoCheckbox);
+        // todo.appendChild(todoCheckboxDiv);
         todo.appendChild(todoDescription);
         todoEditDiv.appendChild(todoEdit);
         todo.appendChild(todoEditDiv);
@@ -517,7 +517,7 @@ function createProject(project){
             content.appendChild(showTodoDetails(title, description, dueDate));
         });
 
-        todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
+        // todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
 
         function editTodoInfo(title, description, dueDate){
  
