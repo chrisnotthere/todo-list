@@ -4,6 +4,7 @@ export default class Todo{
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
+        this.isComplete = false;
     }
 
     setName(name){
@@ -30,9 +31,12 @@ export default class Todo{
         return this.dueDate;
     }
 
+    setIscomplete(bool){
+        this.isComplete = bool;
+    }
 
-
-
-
+    getIsComplete(){
+        return this.isComplete;
+    }
 
 }
