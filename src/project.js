@@ -1,4 +1,7 @@
-export default class Project{
+import './projectList';
+import {allProjectsList} from './UI'
+
+export class Project{
 
     constructor(name){
         this.name = name;
@@ -28,5 +31,25 @@ export default class Project{
     deleteTodo(oldTodo){
         this.todos = this.todos.filter((todo) => todo.name != oldTodo);
     }
+
+}
+
+export class Inbox {
+
+    constructor(){
+
+        let allProjectsArray = allProjectsList.getProjects();
+        let allTodos = [];
+        allProjectsArray.forEach(project => allTodos.push(project));
+
+        //this.todos = allProjectsList.getProjects();
+        this.todos = allTodos;
+
+
+
+
+    }
+
+
 
 }

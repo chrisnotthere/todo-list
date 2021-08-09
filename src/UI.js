@@ -1,14 +1,24 @@
-import Project from './project';
+import {Project, Inbox} from './project';
 import Todo from './todo';
 import ProjectList from './projectList'
 
-////test project/todos
-let allProjectsList = new ProjectList('allProjectsList');
-
+export let allProjectsList = new ProjectList('allProjectsList');
 export let testProject2 = new Project('job search');
 let testProject3 = new Project('study for final');
 
-let inboxProject = new Project('Inbox');
+//let inboxProject = new Project('Inbox');
+let inboxProject = new Inbox();
+
+console.log(allProjectsList);
+console.log(allProjectsList.getProjects());
+
+
+// let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle.innerText);
+// let currentTodo = currentProject.getTodos().find( todo => {
+//     return todo.name === title
+// });
+
+
 
 let testTodo4 = new Todo('build resume', 'do this and that and that', 'tomorrow');
 let testTodo5 = new Todo('cold call companies', 'description', '08-08-2021');
@@ -17,12 +27,12 @@ let testTodo7 = new Todo('make flash cards', 'do this and that and that', 'tomor
 let testTodo8 = new Todo('get extra stong coffee', 'description', '08-08-2021');
 let testTodo9 = new Todo('study all night', 'blahblahblah', '08--15-2021');
 
-testProject2.addTodo(testTodo4);
-testProject2.addTodo(testTodo5);
-testProject2.addTodo(testTodo6);
-testProject3.addTodo(testTodo7);
-testProject3.addTodo(testTodo8);
-testProject3.addTodo(testTodo9);
+testProject2.addTodo(testTodo4);    //inboxProject.addTodo(testTodo4);
+testProject2.addTodo(testTodo5);    
+testProject2.addTodo(testTodo6);    
+testProject3.addTodo(testTodo7);    
+testProject3.addTodo(testTodo8);    
+testProject3.addTodo(testTodo9);    
 
 allProjectsList.addProject(testProject2);
 allProjectsList.addProject(testProject3);
@@ -477,11 +487,6 @@ function createProject(project){
         const todo = document.createElement('li');
         todo.classList.add('userTask');
         todo.id = todoCounter;
-        // const todoCheckboxDiv = document.createElement('div');
-        // todoCheckboxDiv.id = 'todoCheckboxDiv';
-        // const todoCheckbox = document.createElement('i');
-        // todoCheckbox.classList.add('far', 'fa-square');
-        // todoCheckbox.id = 'todoCheckbox';
         //edit btn
         const todoEditDiv = document.createElement('div');
         todoEditDiv.id = 'todoEditDiv';
@@ -503,8 +508,6 @@ function createProject(project){
         todoDueDate.innerText = dueDate;
         todoDueDate.classList.add('todoDueDate');
     
-        // todoCheckboxDiv.appendChild(todoCheckbox);
-        // todo.appendChild(todoCheckboxDiv);
         todo.appendChild(todoDescription);
         todoEditDiv.appendChild(todoEdit);
         todo.appendChild(todoEditDiv);
@@ -517,10 +520,7 @@ function createProject(project){
             content.appendChild(showTodoDetails(title, description, dueDate));
         });
 
-        // todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
-
         function editTodoInfo(title, description, dueDate){
- 
             const editTodoForm = document.createElement('form');
             editTodoForm.id = 'editTodoForm';
 
