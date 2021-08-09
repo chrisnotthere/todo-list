@@ -26,7 +26,6 @@ export default class ProjectList{
     }
 
     deleteProject(oldProject){
-        //this.todos = this.todos.filter((todo) => todo.name != oldTodo);
         this.projects = this.projects.filter((project) => project.name != oldProject);
     }
 
