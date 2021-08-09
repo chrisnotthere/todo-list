@@ -5,15 +5,11 @@ import ProjectList from './projectList'
 ////test project/todos
 let allProjectsList = new ProjectList('allProjectsList');
 
-export let testProject = new Project('example project');
-let testProject2 = new Project('job search');
+export let testProject2 = new Project('job search');
 let testProject3 = new Project('study for final');
 
 let inboxProject = new Project('Inbox');
 
-let testTodo1 = new Todo('testTodo', 'do this and that and that', 'tomorrow');
-let testTodo2 = new Todo('another todo', 'description', '08-08-2021');
-let testTodo3 = new Todo('example 3', 'blahblahblah', '08--15-2021');
 let testTodo4 = new Todo('build resume', 'do this and that and that', 'tomorrow');
 let testTodo5 = new Todo('cold call companies', 'description', '08-08-2021');
 let testTodo6 = new Todo('ask around for job openings', 'blahblahblah', '08--15-2021');
@@ -21,9 +17,6 @@ let testTodo7 = new Todo('make flash cards', 'do this and that and that', 'tomor
 let testTodo8 = new Todo('get extra stong coffee', 'description', '08-08-2021');
 let testTodo9 = new Todo('study all night', 'blahblahblah', '08--15-2021');
 
-testProject.addTodo(testTodo1);
-testProject.addTodo(testTodo2);
-testProject.addTodo(testTodo3);
 testProject2.addTodo(testTodo4);
 testProject2.addTodo(testTodo5);
 testProject2.addTodo(testTodo6);
@@ -31,7 +24,6 @@ testProject3.addTodo(testTodo7);
 testProject3.addTodo(testTodo8);
 testProject3.addTodo(testTodo9);
 
-allProjectsList.addProject(testProject);
 allProjectsList.addProject(testProject2);
 allProjectsList.addProject(testProject3);
 
@@ -365,16 +357,13 @@ function createProject(project){
     //create form to get users new todo info
     addTask.addEventListener('click', () => {
         todoDisplay.appendChild(gatherTodoInfo());
-        //alert('click');
     });
 
     content.appendChild(todoTitleUL)
     content.appendChild(todoDisplay);
     article.appendChild(content);
     content.appendChild(addTaskUL);
-    //////////////////////////////////////////////////////////////////////////////////
-    content.appendChild(showTodoDetails())
-////////////////////////////////////////////////////////////////////////////////////////////
+
     function gatherTodoInfo(){
         addTask.classList.add('hide');
         
@@ -428,7 +417,6 @@ function createProject(project){
 
             let newTodo = new Todo(todoTitleForm.value, todoDescriptionForm.value, dueDateForm.value);
             currentProject.addTodo(newTodo);
-            
             //UI-stuff
             todoForm.classList.add('hide');
             addTask.classList.remove('hide');
@@ -443,8 +431,8 @@ function createProject(project){
 
         return todoForm;
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-    function showTodoDetails(todo){
+
+    function showTodoDetails(title, description, dueDate){
 
         let todoDetailsModal = document.createElement('div');
         todoDetailsModal.classList.add('modal');
@@ -457,28 +445,33 @@ function createProject(project){
         close.classList.add('close');
         close.innerHTML = '&times;';
 
-        let content = document.createElement('p');
-        content.innerText = 'this is a test, todo details will go in here';
+        let todoTitle = document.createElement('h2');
+        todoTitle.innerText = title;
+
+        let todoDecription = document.createElement('p');
+        todoDecription.innerText = `Details: ${description}`;
+
+        let todoDueDate = document.createElement('p');
+        todoDueDate.innerText = `Due: ${dueDate}`;
 
         todoDetailsModalContent.appendChild(close);
-        todoDetailsModalContent.appendChild(content);
+        todoDetailsModalContent.appendChild(todoTitle);
+        todoDetailsModalContent.appendChild(todoDueDate);
+        todoDetailsModalContent.appendChild(todoDecription);
         todoDetailsModal.appendChild(todoDetailsModalContent);
 
         close.onclick = function() {
             todoDetailsModal.style.display = "none";
         }
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == todoDetailsModal) {
                 todoDetailsModal.style.display = "none";
                 }
         }
-
         return todoDetailsModal;
-
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////
+
     function createTodo(title, description, dueDate){
         //checkbox btn
         const todo = document.createElement('li');
@@ -519,19 +512,84 @@ function createProject(project){
         todo.appendChild(todoDeleteDiv);
         todo.appendChild(todoDueDate);
     
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //todoDescription.addEventListener('click', () => alert(description));
+        //modal showing todo details
         todoDescription.addEventListener('click', () => {
-            const toDoDetailsModal = document.getElementById('toDoDetailsModal');
-            toDoDetailsModal.style.display = 'block';
+            content.appendChild(showTodoDetails(title, description, dueDate));
         });
 
-
-
-
-
         todoCheckboxDiv.addEventListener('click', () => alert('cross out the todo'));
-        todoEditDiv.addEventListener('click', () => alert('edit details of todo'));
+
+        function editTodoInfo(title, description, dueDate){
+ 
+            const editTodoForm = document.createElement('form');
+            editTodoForm.id = 'editTodoForm';
+
+            const todoTitleForm = document.createElement('textArea');
+            todoTitleForm.id = 'todoTitleForm';
+            todoTitleForm.textContent = title;
+            todoTitleForm.required = true;
+
+            const todoDescriptionForm = document.createElement('textArea');
+            todoDescriptionForm.id = 'todoTitleForm';
+            todoDescriptionForm.textContent = description;
+            todoDescriptionForm.required = true;
+
+            const dueDateForm = document.createElement('textArea');
+            dueDateForm.id = 'dueDateForm';
+            dueDateForm.textContent = dueDate;
+            dueDateForm.required = false;
+
+            const formBtns = document.createElement('div');
+            formBtns.id = 'formBtns';
+
+            const acceptIconDiv = document.createElement('i');
+            acceptIconDiv.id = 'acceptIconDiv';
+            const acceptIcon = document.createElement('i');
+            acceptIcon.classList.add('fas', 'fa-check', 'fa-2x');
+            acceptIconDiv.id = 'acceptIconDiv';
+            acceptIconDiv.appendChild(acceptIcon);
+
+            const cancelIconDiv = document.createElement('i');
+            cancelIconDiv.id = 'cancelIconDiv';
+            const cancelIcon = document.createElement('i');
+            cancelIcon.classList.add('fas', 'fa-times', 'fa-2x');
+            cancelIcon.id = 'cancelIcon';
+            cancelIconDiv.appendChild(cancelIcon);
+
+            editTodoForm.appendChild(todoTitleForm);
+            editTodoForm.appendChild(todoDescriptionForm);
+            editTodoForm.appendChild(dueDateForm);
+            formBtns.appendChild(acceptIconDiv)
+            formBtns.appendChild(cancelIconDiv)
+            editTodoForm.appendChild(formBtns);
+
+            //add todo to the project when click accept
+            acceptIconDiv.addEventListener('click', () => {
+                const currentProjectTitle = document.querySelector('#todoTitle');
+                let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle.innerText);
+                let currentTodo = currentProject.getTodos().find( todo => {
+                    return todo.name === title
+                });
+
+                currentTodo.setName(todoTitleForm.value);
+                currentTodo.setDescription(todoDescriptionForm.value);
+                currentTodo.setDueDate(dueDateForm.value);
+                refreshPage(currentProject);
+            });
+            
+            //cancel edit todo when click cancel
+            cancelIconDiv.addEventListener('click', () => {
+                editTodoForm.classList.add('hide');
+            });
+
+            return editTodoForm;
+        }
+
+        //create form to get users new todo info
+        todoEditDiv.addEventListener('click', () => {
+            todoDisplay.appendChild(editTodoInfo(title, description, dueDate));
+        });
+
         //delete todo btn
         todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
 
