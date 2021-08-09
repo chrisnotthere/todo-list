@@ -15,7 +15,7 @@ export default class Todo{
         return this.name;
     }
 
-    setDecription(description){
+    setDescription(description){
         this.description = description;
     }
 
