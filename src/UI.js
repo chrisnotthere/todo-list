@@ -368,30 +368,40 @@ function createProjectControl(project, title){
 
     function showTodoDetails(title, description, dueDate){
 
-        let todoDetailsModal = document.createElement('div');
+        const todoDetailsModal = document.createElement('div');
         todoDetailsModal.classList.add('modal');
         todoDetailsModal.id = 'toDoDetailsModal';
 
-        let todoDetailsModalContent = document.createElement('div');
+        const todoDetailsModalContent = document.createElement('div');
         todoDetailsModalContent.classList.add('modal-content');
 
-        let close = document.createElement('span');
+        const close = document.createElement('span');
         close.classList.add('close');
         close.innerHTML = '&times;';
 
-        let todoTitle = document.createElement('h2');
+        const todoTitle = document.createElement('h2');
         todoTitle.innerText = title;
 
-        let todoDecription = document.createElement('p');
+        const todoDecription = document.createElement('p');
         todoDecription.innerText = `Details: ${description}`;
 
-        let todoDueDate = document.createElement('p');
+        const todoDueDate = document.createElement('p');
         todoDueDate.innerText = `Due: ${dueDate}`;
+        
+        //find project that contains that specific todo
+        const findTodo = allProjectsList.projects.find(project => {
+            console.log(project.todos.find(todo => todo.name === title))
+            return project.todos.find(todo => todo.name === title);
+        });
+
+        const projectName = document.createElement('p');
+        projectName.innerText = `Project: ${findTodo.name}`;
 
         todoDetailsModalContent.appendChild(close);
         todoDetailsModalContent.appendChild(todoTitle);
-        todoDetailsModalContent.appendChild(todoDueDate);
+        todoDetailsModalContent.appendChild(projectName);
         todoDetailsModalContent.appendChild(todoDecription);
+        todoDetailsModalContent.appendChild(todoDueDate);
         todoDetailsModal.appendChild(todoDetailsModalContent);
 
         close.onclick = function() {
@@ -514,8 +524,14 @@ function createProjectControl(project, title){
             todoDisplay.appendChild(editTodoInfo(title, description, dueDate));
         });
 
+
+////////////////////////////////////////////////////////////////
         //delete todo btn
         todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
+
+
+
+////////////////////////////////////////////////////////////////
 
         todoCounter++;
         return todo;
@@ -674,10 +690,14 @@ function createProject(project){
         let todoDueDate = document.createElement('p');
         todoDueDate.innerText = `Due: ${dueDate}`;
 
+        let projectName = document.createElement('p');
+        projectName.innerText = `Project: ${project.name}`;
+
         todoDetailsModalContent.appendChild(close);
         todoDetailsModalContent.appendChild(todoTitle);
-        todoDetailsModalContent.appendChild(todoDueDate);
+        todoDetailsModalContent.appendChild(projectName);
         todoDetailsModalContent.appendChild(todoDecription);
+        todoDetailsModalContent.appendChild(todoDueDate);
         todoDetailsModal.appendChild(todoDetailsModalContent);
 
         close.onclick = function() {
