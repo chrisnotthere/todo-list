@@ -246,6 +246,18 @@ body{
   margin-left: 5rem;
 }
 
+#editTodoForm{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+#editTodoFormContainer textarea{
+  display: flex;
+  width: 30rem;
+}
+
+
 #todoForm{
   display: flex;
   flex-direction: column;
@@ -255,7 +267,11 @@ body{
 #todoForm textarea{
   margin: 0.5rem;
   width: 50%;
+}
 
+#todoForm input{
+  margin: 0.5rem;
+  width: 10%;
 }
 
 #formBtns i{
