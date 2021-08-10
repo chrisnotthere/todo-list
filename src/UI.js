@@ -7,27 +7,16 @@ export let testProject2 = new Project('job search');
 let testProject3 = new Project('study for final');
 
 //let inboxProject = new Project('Inbox');
-let inboxProject = new Inbox();
-
-console.log(allProjectsList);
-console.log(allProjectsList.getProjects());
-
-
-// let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle.innerText);
-// let currentTodo = currentProject.getTodos().find( todo => {
-//     return todo.name === title
-// });
-
-
+//let inboxView = new Inbox();
 
 let testTodo4 = new Todo('build resume', 'do this and that and that', 'tomorrow');
 let testTodo5 = new Todo('cold call companies', 'description', '08-08-2021');
-let testTodo6 = new Todo('ask around for job openings', 'blahblahblah', '08--15-2021');
+let testTodo6 = new Todo('ask around for job openings', 'blahblahblah', '08-15-2021');
 let testTodo7 = new Todo('make flash cards', 'do this and that and that', 'tomorrow');
 let testTodo8 = new Todo('get extra stong coffee', 'description', '08-08-2021');
-let testTodo9 = new Todo('study all night', 'blahblahblah', '08--15-2021');
+let testTodo9 = new Todo('study all night', 'blahblahblah', '08-15-2021');
 
-testProject2.addTodo(testTodo4);    //inboxProject.addTodo(testTodo4);
+testProject2.addTodo(testTodo4);    
 testProject2.addTodo(testTodo5);    
 testProject2.addTodo(testTodo6);    
 testProject3.addTodo(testTodo7);    
@@ -36,11 +25,12 @@ testProject3.addTodo(testTodo9);
 
 allProjectsList.addProject(testProject2);
 allProjectsList.addProject(testProject3);
+//////////////////////////////////
 
+//console.log(allProjectsList);
+//console.log(allProjectsList.projects[0].todos);
 
-////
-
-
+////////////////////////////////////
 function createHeader() {
     const header = document.createElement('header');
     header.classList.add('header');
@@ -103,8 +93,14 @@ function createNav(){
     inboxTitle.innerText = 'Inbox';
     inbox.appendChild(inboxIcon);
     inbox.appendChild(inboxTitle);
+////////////////////////////////////////////////////////////////////////////////////////
+    //inbox.addEventListener('click', () => alert('inbox'));
 
-    inbox.addEventListener('click', () => alert('inbox'));
+
+    inbox.addEventListener('click', () => loadProjectControl(allProjectsList, 'Inbox'));
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
     // today
     const today = document.createElement('li');
@@ -265,17 +261,20 @@ function createNav(){
         project.appendChild(projectDeleteDiv);
         projectDeleteDiv.appendChild(projectDelete);
     
-        // dynamically insert project into loadContent function
+        // dynamically insert project into loadProject function
         let resultObject = allProjectsList.getProjects().find(o => o.name === title);
 
         //show project contents
-        projectTitle.addEventListener('click', () => loadContent(resultObject));
-        projectIconDiv.addEventListener('click', () => loadContent(resultObject));
+        projectTitle.addEventListener('click', () => loadProject(resultObject));
+        projectIconDiv.addEventListener('click', () => loadProject(resultObject));
 
         projectDeleteDiv.addEventListener('click', () => {
             //delete project and refresh the page...
             allProjectsList.deleteProject(title);
-            refreshPage(inboxProject);
+            refreshPage(testProject2);
+            //show inbox screen
+            loadProjectControl(allProjectsList, 'Inbox')
+
             console.log(allProjectsList);                   
         });
 
@@ -305,15 +304,226 @@ export function loadMain(project){
     document.body.appendChild(createMain(project));
 }
 
-function loadContent(project){
+function loadProject(project){
     //clear article
     const article = document.querySelector('#article');
     article.remove();
-    //create new article, appeand it to main
+    //create new article, append it to main
     const main = document.querySelector('main');
     main.appendChild(createProject(project));
 
 }
+
+function loadProjectControl(projectControl, title){    //used only for inbox, today, and this week
+    //clear article
+    const article = document.querySelector('#article');
+    article.remove();
+    //create new article, append it to main
+    const main = document.querySelector('main');
+    main.appendChild(createProjectControl(projectControl, title));
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+function createProjectControl(project, title){
+    const article = document.createElement('article');
+    article.id = 'article';
+
+    const content = document.createElement('div');
+    content.id = 'content';
+
+    //// project content header
+    const todoTitleUL = document.createElement('ul');
+    todoTitleUL.id = 'todoTitleUL';
+    const todoTitle = document.createElement('div');
+    todoTitle.innerText = title;
+    todoTitle.id = 'todoTitle';
+    const todoTitleSort = document.createElement('div');
+    todoTitleSort.innerText = 'Due Date';
+    todoTitleSort.id = 'todoTitleSort';
+    todoTitleUL.appendChild(todoTitle);
+    todoTitleUL.appendChild(todoTitleSort);
+
+    todoTitleSort.addEventListener('click', () => alert('sort the todo list by date'));
+
+    // main content TODO list items
+    const todoDisplay = document.createElement('ul'); 
+    todoDisplay.id = 'todoDisplay';
+    let todoCounter = 0;
+
+    //get all todos and append to todoDisplay
+    project.projects.forEach(element => {
+        //console.log(element);
+        //console.log(element.todos);
+        element.todos.forEach(todo => {
+            todoDisplay.appendChild(createTodo(todo.name, todo.description, todo.dueDate));
+
+        });
+    });
+
+    content.appendChild(todoTitleUL)
+    content.appendChild(todoDisplay);
+    article.appendChild(content);
+
+    function showTodoDetails(title, description, dueDate){
+
+        let todoDetailsModal = document.createElement('div');
+        todoDetailsModal.classList.add('modal');
+        todoDetailsModal.id = 'toDoDetailsModal';
+
+        let todoDetailsModalContent = document.createElement('div');
+        todoDetailsModalContent.classList.add('modal-content');
+
+        let close = document.createElement('span');
+        close.classList.add('close');
+        close.innerHTML = '&times;';
+
+        let todoTitle = document.createElement('h2');
+        todoTitle.innerText = title;
+
+        let todoDecription = document.createElement('p');
+        todoDecription.innerText = `Details: ${description}`;
+
+        let todoDueDate = document.createElement('p');
+        todoDueDate.innerText = `Due: ${dueDate}`;
+
+        todoDetailsModalContent.appendChild(close);
+        todoDetailsModalContent.appendChild(todoTitle);
+        todoDetailsModalContent.appendChild(todoDueDate);
+        todoDetailsModalContent.appendChild(todoDecription);
+        todoDetailsModal.appendChild(todoDetailsModalContent);
+
+        close.onclick = function() {
+            todoDetailsModal.style.display = "none";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == todoDetailsModal) {
+                todoDetailsModal.style.display = "none";
+                }
+        }
+        return todoDetailsModal;
+    }
+
+    function createTodo(title, description, dueDate){
+        //checkbox btn
+        const todo = document.createElement('li');
+        todo.classList.add('userTask');
+        todo.id = todoCounter;
+        //edit btn
+        const todoEditDiv = document.createElement('div');
+        todoEditDiv.id = 'todoEditDiv';
+        const todoEdit = document.createElement('i');
+        todoEdit.classList.add('far', 'fa-edit');
+        todoEdit.id = 'todoEdit';
+        //delete btn
+        const todoDeleteDiv = document.createElement('div');
+        todoDeleteDiv.id = 'todoDeleteDiv';
+        const todoDelete = document.createElement('i');
+        todoDelete.classList.add('far', 'fa-trash-alt');
+        todoDelete.id = 'todoDelete';
+        //description
+        const todoDescription = document.createElement('div');
+        todoDescription.innerText = title;
+        todoDescription.classList.add('todoDecription');
+        //due date
+        const todoDueDate = document.createElement('div');
+        todoDueDate.innerText = dueDate;
+        todoDueDate.classList.add('todoDueDate');
+    
+        todo.appendChild(todoDescription);
+        todoEditDiv.appendChild(todoEdit);
+        todo.appendChild(todoEditDiv);
+        todoDeleteDiv.appendChild(todoDelete);
+        todo.appendChild(todoDeleteDiv);
+        todo.appendChild(todoDueDate);
+    
+        //modal showing todo details
+        todoDescription.addEventListener('click', () => {
+            content.appendChild(showTodoDetails(title, description, dueDate));
+        });
+
+        function editTodoInfo(title, description, dueDate){
+            const editTodoForm = document.createElement('form');
+            editTodoForm.id = 'editTodoForm';
+
+            const todoTitleForm = document.createElement('textArea');
+            todoTitleForm.id = 'todoTitleForm';
+            todoTitleForm.textContent = title;
+            todoTitleForm.required = true;
+
+            const todoDescriptionForm = document.createElement('textArea');
+            todoDescriptionForm.id = 'todoTitleForm';
+            todoDescriptionForm.textContent = description;
+            todoDescriptionForm.required = true;
+
+            const dueDateForm = document.createElement('textArea');
+            dueDateForm.id = 'dueDateForm';
+            dueDateForm.textContent = dueDate;
+            dueDateForm.required = false;
+
+            const formBtns = document.createElement('div');
+            formBtns.id = 'formBtns';
+
+            const acceptIconDiv = document.createElement('i');
+            acceptIconDiv.id = 'acceptIconDiv';
+            const acceptIcon = document.createElement('i');
+            acceptIcon.classList.add('fas', 'fa-check', 'fa-2x');
+            acceptIconDiv.id = 'acceptIconDiv';
+            acceptIconDiv.appendChild(acceptIcon);
+
+            const cancelIconDiv = document.createElement('i');
+            cancelIconDiv.id = 'cancelIconDiv';
+            const cancelIcon = document.createElement('i');
+            cancelIcon.classList.add('fas', 'fa-times', 'fa-2x');
+            cancelIcon.id = 'cancelIcon';
+            cancelIconDiv.appendChild(cancelIcon);
+
+            editTodoForm.appendChild(todoTitleForm);
+            editTodoForm.appendChild(todoDescriptionForm);
+            editTodoForm.appendChild(dueDateForm);
+            formBtns.appendChild(acceptIconDiv)
+            formBtns.appendChild(cancelIconDiv)
+            editTodoForm.appendChild(formBtns);
+
+            //add todo to the project when click accept
+            acceptIconDiv.addEventListener('click', () => {
+                const currentProjectTitle = document.querySelector('#todoTitle');
+                let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle.innerText);
+                let currentTodo = currentProject.getTodos().find( todo => {
+                    return todo.name === title
+                });
+
+                currentTodo.setName(todoTitleForm.value);
+                currentTodo.setDescription(todoDescriptionForm.value);
+                currentTodo.setDueDate(dueDateForm.value);
+                refreshPage(currentProject);
+            });
+            
+            //cancel edit todo when click cancel
+            cancelIconDiv.addEventListener('click', () => {
+                editTodoForm.classList.add('hide');
+            });
+
+            return editTodoForm;
+        }
+
+        //create form to get users new todo info
+        todoEditDiv.addEventListener('click', () => {
+            todoDisplay.appendChild(editTodoInfo(title, description, dueDate));
+        });
+
+        //delete todo btn
+        todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
+
+        todoCounter++;
+        return todo;
+    }
+
+    return article
+}
+
 
 
 function createProject(project){
@@ -611,5 +821,5 @@ function deleteTodo(todoTitle){
     //remove todo from project
     currentProject.deleteTodo(todoTitle);
     //reload the page
-    loadContent(currentProject);
+    loadProject(currentProject);
 }

@@ -34,22 +34,31 @@ export class Project{
 
 }
 
-export class Inbox {
+///////////////////////// use similar setup for today and this week
+// export class Inbox {
 
-    constructor(){
+//     constructor(){
+//         this.projects = allProjectsList.getProjects();
+//     }
 
-        let allProjectsArray = allProjectsList.getProjects();
-        let allTodos = [];
-        allProjectsArray.forEach(project => allTodos.push(project));
+//     setName(name){
+//         this.name = name;
+//     }
 
-        //this.todos = allProjectsList.getProjects();
-        this.todos = allTodos;
+//     getName(name){
+//         return this.name;
+//     }
 
+//     setTodos(todos){
+//         this.todos = todos;
+//     }
 
+//     getTodos(){
+//         return this.todos;
+//     }
 
+//     updateInbox(){
+//         this.projects = allProjectsList.getProjects();
+//     }
 
-    }
-
-
-
-}
+// }
