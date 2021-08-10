@@ -349,7 +349,7 @@ function createProjectControl(project, title){
 
     // main content TODO list items
     const todoDisplay = document.createElement('ul'); 
-    todoDisplay.id = 'todoDisplay';
+    todoDisplay.id = 'todoDisplayInbox';
     let todoCounter = 0;
 
     //get all todos and append to todoDisplay
@@ -389,13 +389,13 @@ function createProjectControl(project, title){
         todoDueDate.innerText = `Due: ${dueDate}`;
         
         //find project that contains that specific todo
-        const findTodo = allProjectsList.projects.find(project => {
+        const findProject = allProjectsList.projects.find(project => {
             console.log(project.todos.find(todo => todo.name === title))
             return project.todos.find(todo => todo.name === title);
         });
 
         const projectName = document.createElement('p');
-        projectName.innerText = `Project: ${findTodo.name}`;
+        projectName.innerText = `Project: ${findProject.name}`;
 
         todoDetailsModalContent.appendChild(close);
         todoDetailsModalContent.appendChild(todoTitle);
@@ -421,12 +421,6 @@ function createProjectControl(project, title){
         const todo = document.createElement('li');
         todo.classList.add('userTask');
         todo.id = todoCounter;
-        //edit btn
-        const todoEditDiv = document.createElement('div');
-        todoEditDiv.id = 'todoEditDiv';
-        const todoEdit = document.createElement('i');
-        todoEdit.classList.add('far', 'fa-edit');
-        todoEdit.id = 'todoEdit';
         //delete btn
         const todoDeleteDiv = document.createElement('div');
         todoDeleteDiv.id = 'todoDeleteDiv';
@@ -443,8 +437,6 @@ function createProjectControl(project, title){
         todoDueDate.classList.add('todoDueDate');
     
         todo.appendChild(todoDescription);
-        todoEditDiv.appendChild(todoEdit);
-        todo.appendChild(todoEditDiv);
         todoDeleteDiv.appendChild(todoDelete);
         todo.appendChild(todoDeleteDiv);
         todo.appendChild(todoDueDate);
@@ -454,84 +446,15 @@ function createProjectControl(project, title){
             content.appendChild(showTodoDetails(title, description, dueDate));
         });
 
-        function editTodoInfo(title, description, dueDate){
-            const editTodoForm = document.createElement('form');
-            editTodoForm.id = 'editTodoForm';
-
-            const todoTitleForm = document.createElement('textArea');
-            todoTitleForm.id = 'todoTitleForm';
-            todoTitleForm.textContent = title;
-            todoTitleForm.required = true;
-
-            const todoDescriptionForm = document.createElement('textArea');
-            todoDescriptionForm.id = 'todoTitleForm';
-            todoDescriptionForm.textContent = description;
-            todoDescriptionForm.required = true;
-
-            const dueDateForm = document.createElement('textArea');
-            dueDateForm.id = 'dueDateForm';
-            dueDateForm.textContent = dueDate;
-            dueDateForm.required = false;
-
-            const formBtns = document.createElement('div');
-            formBtns.id = 'formBtns';
-
-            const acceptIconDiv = document.createElement('i');
-            acceptIconDiv.id = 'acceptIconDiv';
-            const acceptIcon = document.createElement('i');
-            acceptIcon.classList.add('fas', 'fa-check', 'fa-2x');
-            acceptIconDiv.id = 'acceptIconDiv';
-            acceptIconDiv.appendChild(acceptIcon);
-
-            const cancelIconDiv = document.createElement('i');
-            cancelIconDiv.id = 'cancelIconDiv';
-            const cancelIcon = document.createElement('i');
-            cancelIcon.classList.add('fas', 'fa-times', 'fa-2x');
-            cancelIcon.id = 'cancelIcon';
-            cancelIconDiv.appendChild(cancelIcon);
-
-            editTodoForm.appendChild(todoTitleForm);
-            editTodoForm.appendChild(todoDescriptionForm);
-            editTodoForm.appendChild(dueDateForm);
-            formBtns.appendChild(acceptIconDiv)
-            formBtns.appendChild(cancelIconDiv)
-            editTodoForm.appendChild(formBtns);
-
-            //add todo to the project when click accept
-            acceptIconDiv.addEventListener('click', () => {
-                const currentProjectTitle = document.querySelector('#todoTitle');
-                let currentProject = allProjectsList.getProjects().find(o => o.getName() === currentProjectTitle.innerText);
-                let currentTodo = currentProject.getTodos().find( todo => {
-                    return todo.name === title
-                });
-
-                currentTodo.setName(todoTitleForm.value);
-                currentTodo.setDescription(todoDescriptionForm.value);
-                currentTodo.setDueDate(dueDateForm.value);
-                refreshPage(currentProject);
-            });
-            
-            //cancel edit todo when click cancel
-            cancelIconDiv.addEventListener('click', () => {
-                editTodoForm.classList.add('hide');
-            });
-
-            return editTodoForm;
-        }
-
-        //create form to get users new todo info
-        todoEditDiv.addEventListener('click', () => {
-            todoDisplay.appendChild(editTodoInfo(title, description, dueDate));
+        //delete todo btn
+        //find project that contains that specific todo
+        const findProject = allProjectsList.projects.find(project => {
+            console.log(project.todos.find(todo => todo.name === title))
+            return project.todos.find(todo => todo.name === title);
         });
 
+        todoDeleteDiv.addEventListener('click', () => deleteTodoFromInbox(title, findProject));
 
-////////////////////////////////////////////////////////////////
-        //delete todo btn
-        todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
-
-
-
-////////////////////////////////////////////////////////////////
 
         todoCounter++;
         return todo;
@@ -806,7 +729,6 @@ function createProject(project){
                 currentTodo.setDueDate(dueDateForm.value);
                 refreshPage(currentProject);
             });
-            
             //cancel edit todo when click cancel
             cancelIconDiv.addEventListener('click', () => {
                 editTodoForm.classList.add('hide');
@@ -814,19 +736,16 @@ function createProject(project){
 
             return editTodoForm;
         }
-
         //create form to get users new todo info
         todoEditDiv.addEventListener('click', () => {
             todoDisplay.appendChild(editTodoInfo(title, description, dueDate));
         });
-
         //delete todo btn
         todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
 
         todoCounter++;
         return todo;
     }
-
     return article
 }
 
@@ -843,3 +762,9 @@ function deleteTodo(todoTitle){
     //reload the page
     loadProject(currentProject);
 }
+
+function deleteTodoFromInbox(todo, project){
+    project.deleteTodo(todo);
+    loadProjectControl(allProjectsList, 'Inbox');
+}
+
