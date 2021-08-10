@@ -1,20 +1,19 @@
-import {Project, Inbox} from './project';
+import {Project, Today} from './project';
 import Todo from './todo';
 import ProjectList from './projectList'
 
 export let allProjectsList = new ProjectList('allProjectsList');
-export let testProject2 = new Project('job search');
+export let testProject2 = new Project('move house');
 let testProject3 = new Project('study for final');
 
-//let inboxProject = new Project('Inbox');
-//let inboxView = new Inbox();
+let todayView = new Today();
 
-let testTodo4 = new Todo('build resume', 'do this and that and that', 'tomorrow');
-let testTodo5 = new Todo('cold call companies', 'description', '08-08-2021');
-let testTodo6 = new Todo('ask around for job openings', 'blahblahblah', '08-15-2021');
-let testTodo7 = new Todo('make flash cards', 'do this and that and that', 'tomorrow');
-let testTodo8 = new Todo('get extra stong coffee', 'description', '08-08-2021');
-let testTodo9 = new Todo('study all night', 'blahblahblah', '08-15-2021');
+let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-10');
+let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-13');
+let testTodo6 = new Todo('book moving company', 'make sure they arrive in the morning, early as possible', '2021-08-15');
+let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-09');
+let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-10');
+let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-12');
 
 testProject2.addTodo(testTodo4);    
 testProject2.addTodo(testTodo5);    
@@ -27,8 +26,7 @@ allProjectsList.addProject(testProject2);
 allProjectsList.addProject(testProject3);
 //////////////////////////////////
 
-//console.log(allProjectsList);
-//console.log(allProjectsList.projects[0].todos);
+console.log(todayView);
 
 ////////////////////////////////////
 function createHeader() {
@@ -535,11 +533,12 @@ function createProject(project){
         todoTitleForm.required = true;
 
         const todoDescriptionForm = document.createElement('textArea');
-        todoDescriptionForm.id = 'todoTitleForm';
+        todoDescriptionForm.id = 'todoDescriptionForm';
         todoDescriptionForm.placeholder = 'Details: fold laundry at 4pm';
         todoDescriptionForm.required = true;
 
-        const dueDateForm = document.createElement('textArea');
+        const dueDateForm = document.createElement('input');
+        dueDateForm.type = 'date';
         dueDateForm.id = 'dueDateForm';
         dueDateForm.placeholder = '08-06-2021';
         dueDateForm.required = false;
@@ -677,17 +676,21 @@ function createProject(project){
             const editTodoForm = document.createElement('form');
             editTodoForm.id = 'editTodoForm';
 
+            const editTodoFormContainer = document.createElement('div');
+            editTodoFormContainer.id = 'editTodoFormContainer';
+
             const todoTitleForm = document.createElement('textArea');
             todoTitleForm.id = 'todoTitleForm';
             todoTitleForm.textContent = title;
             todoTitleForm.required = true;
 
             const todoDescriptionForm = document.createElement('textArea');
-            todoDescriptionForm.id = 'todoTitleForm';
+            todoDescriptionForm.id = 'todoDescriptionForm';
             todoDescriptionForm.textContent = description;
             todoDescriptionForm.required = true;
 
-            const dueDateForm = document.createElement('textArea');
+            const dueDateForm = document.createElement('input');
+            dueDateForm.type = 'date';
             dueDateForm.id = 'dueDateForm';
             dueDateForm.textContent = dueDate;
             dueDateForm.required = false;
@@ -709,9 +712,10 @@ function createProject(project){
             cancelIcon.id = 'cancelIcon';
             cancelIconDiv.appendChild(cancelIcon);
 
-            editTodoForm.appendChild(todoTitleForm);
-            editTodoForm.appendChild(todoDescriptionForm);
-            editTodoForm.appendChild(dueDateForm);
+            editTodoFormContainer.appendChild(todoTitleForm);
+            editTodoFormContainer.appendChild(todoDescriptionForm);
+            editTodoFormContainer.appendChild(dueDateForm);
+            editTodoForm.appendChild(editTodoFormContainer);
             formBtns.appendChild(acceptIconDiv)
             formBtns.appendChild(cancelIconDiv)
             editTodoForm.appendChild(formBtns);

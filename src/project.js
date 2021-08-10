@@ -34,31 +34,32 @@ export class Project{
 
 }
 
-///////////////////////// use similar setup for today and this week
-// export class Inbox {
+/////////////////////// use similar setup for today and this week
+export class Today {
 
-//     constructor(){
-//         this.projects = allProjectsList.getProjects();
-//     }
+    constructor(){
+        this.projects = allProjectsList.getProjects();
+        this.todos = allProjectsList.projects.todos;
+    }
 
-//     setName(name){
-//         this.name = name;
-//     }
+    setName(name){
+        this.name = name;
+    }
 
-//     getName(name){
-//         return this.name;
-//     }
+    getName(name){
+        return this.name;
+    }
 
-//     setTodos(todos){
-//         this.todos = todos;
-//     }
+    // setTodos(todos){
+    //     this.todos = todos;
+    // }
 
-//     getTodos(){
-//         return this.todos;
-//     }
+    // getTodos(){
+    //     return this.todos;
+    // }
 
-//     updateInbox(){
-//         this.projects = allProjectsList.getProjects();
-//     }
+    updateInbox(){
+        this.projects = allProjectsList.getProjects();
+    }
 
-// }
+}
