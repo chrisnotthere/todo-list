@@ -6,29 +6,21 @@ export let allProjectsList = new ProjectList('allProjectsList');
 export let testProject2 = new Project('move house');
 let testProject3 = new Project('study for final');
 
-let todayView = new Today();
-
 let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-10');
-let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-13');
-let testTodo6 = new Todo('book moving company', 'make sure they arrive in the morning, early as possible', '2021-08-15');
+let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-10');
 let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-09');
 let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-10');
 let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-12');
 
 testProject2.addTodo(testTodo4);    
 testProject2.addTodo(testTodo5);    
-testProject2.addTodo(testTodo6);    
 testProject3.addTodo(testTodo7);    
 testProject3.addTodo(testTodo8);    
 testProject3.addTodo(testTodo9);    
 
 allProjectsList.addProject(testProject2);
 allProjectsList.addProject(testProject3);
-//////////////////////////////////
 
-console.log(todayView);
-
-////////////////////////////////////
 function createHeader() {
     const header = document.createElement('header');
     header.classList.add('header');
@@ -49,7 +41,6 @@ function createHeader() {
 
 export function loadHeader(){
     document.body.appendChild(createHeader());
-
 }
 
 function createFooter(){
@@ -70,11 +61,9 @@ export function loadFooter(){
     document.body.appendChild(createFooter());
 }
 
-
 function createNav(){
     const nav = document.createElement('nav');
     nav.id = 'nav';
-
     //// NAV controls
     const controls = document.createElement('ul'); 
     controls.id = 'controls';
@@ -91,15 +80,7 @@ function createNav(){
     inboxTitle.innerText = 'Inbox';
     inbox.appendChild(inboxIcon);
     inbox.appendChild(inboxTitle);
-////////////////////////////////////////////////////////////////////////////////////////
-    //inbox.addEventListener('click', () => alert('inbox'));
-
-
     inbox.addEventListener('click', () => loadProjectControl(allProjectsList, 'Inbox'));
-
-
-///////////////////////////////////////////////////////////////////////////////////////////
-
     // today
     const today = document.createElement('li');
     today.id = 'today';
@@ -113,9 +94,7 @@ function createNav(){
     todayTitle.innerText = 'Today';
     today.appendChild(todayIcon);
     today.appendChild(todayTitle);
-
-    today.addEventListener('click', () => alert('today'));
-
+    today.addEventListener('click', () => loadProjectControl(allProjectsList, 'Today'));
     // this week
     const thisWeek = document.createElement('li');
     thisWeek.id = 'thisWeek';
@@ -129,9 +108,7 @@ function createNav(){
     thisWeekTitle.innerText = 'This Week';
     thisWeek.appendChild(thisWeekIcon);
     thisWeek.appendChild(thisWeekTitle);
-
-    thisWeek.addEventListener('click', () => alert('thisWeek'));
-
+    thisWeek.addEventListener('click', () => loadProjectControl(allProjectsList, 'This Week'));
     // projects title
     const projectTitle = document.createElement('li');
     projectTitle.innerText = 'Projects';
@@ -142,20 +119,17 @@ function createNav(){
     controls.appendChild(today);
     controls.appendChild(thisWeek);
     controls.appendChild(projectTitle);
-
     ////  projects 
     const projects = document.createElement('ul'); 
     projects.id = 'projects';
 
     let projectCounter = 0;
-
     //foreach project in projectList, append to 'projects' nav ul
     allProjectsList.getProjects().forEach(element => {
         projects.appendChild(createProject(element.getName()));
     });
 
     const projectList = document.querySelector('#projects')
-
     //add new project button
     const addProjectLogo = document.createElement('i');
     addProjectLogo.classList.add('fas', 'fa-plus', 'fa');
@@ -170,7 +144,6 @@ function createNav(){
     addProject.appendChild(addProjectLogo);
     addProject.appendChild(addProjectDescription);
     addProjectUL.appendChild(addProject);
-
     //bring up add project form when 'add project' is clicked
     addProject.addEventListener('click', () => {
         projects.appendChild(newProjectFrom())
@@ -208,18 +181,15 @@ function createNav(){
         projectFormBtns.appendChild(acceptProjectIconDiv)
         projectFormBtns.appendChild(cancelProjectIconDiv)
         projectForm.appendChild(projectFormBtns);
-
         //create new project
         acceptProjectIconDiv.addEventListener('click', () => {
             let newProject = new Project(projectTitleForm.value, []);
-            console.table(newProject);
-
+            //console.table(newProject);
             allProjectsList.addProject(newProject);
-            console.table(allProjectsList);
+            //console.table(allProjectsList);
             //UI-stuff
             refreshPage(newProject);
         });
-        
         //cancel add todo when click cancel
         cancelProjectIconDiv.addEventListener('click', () => {
             projectForm.classList.add('hide');
@@ -229,11 +199,9 @@ function createNav(){
         return projectForm;
     }
 
-
     nav.appendChild(controls);
     nav.appendChild(projects);
     nav.appendChild(addProjectUL)
-
 
     function createProject(title){
         const project = document.createElement('li');
@@ -258,10 +226,8 @@ function createNav(){
         project.appendChild(projectTitle);
         project.appendChild(projectDeleteDiv);
         projectDeleteDiv.appendChild(projectDelete);
-    
         // dynamically insert project into loadProject function
         let resultObject = allProjectsList.getProjects().find(o => o.name === title);
-
         //show project contents
         projectTitle.addEventListener('click', () => loadProject(resultObject));
         projectIconDiv.addEventListener('click', () => loadProject(resultObject));
@@ -272,8 +238,7 @@ function createNav(){
             refreshPage(testProject2);
             //show inbox screen
             loadProjectControl(allProjectsList, 'Inbox')
-
-            console.log(allProjectsList);                   
+            //console.log(allProjectsList);                   
         });
 
         projectCounter++;
@@ -309,7 +274,6 @@ function loadProject(project){
     //create new article, append it to main
     const main = document.querySelector('main');
     main.appendChild(createProject(project));
-
 }
 
 function loadProjectControl(projectControl, title){    //used only for inbox, today, and this week
@@ -319,18 +283,14 @@ function loadProjectControl(projectControl, title){    //used only for inbox, to
     //create new article, append it to main
     const main = document.querySelector('main');
     main.appendChild(createProjectControl(projectControl, title));
-
 }
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 function createProjectControl(project, title){
     const article = document.createElement('article');
     article.id = 'article';
 
     const content = document.createElement('div');
     content.id = 'content';
-
     //// project content header
     const todoTitleUL = document.createElement('ul');
     todoTitleUL.id = 'todoTitleUL';
@@ -344,21 +304,39 @@ function createProjectControl(project, title){
     todoTitleUL.appendChild(todoTitleSort);
 
     todoTitleSort.addEventListener('click', () => alert('sort the todo list by date'));
-
     // main content TODO list items
     const todoDisplay = document.createElement('ul'); 
     todoDisplay.id = 'todoDisplayInbox';
     let todoCounter = 0;
 
-    //get all todos and append to todoDisplay
-    project.projects.forEach(element => {
-        //console.log(element);
-        //console.log(element.todos);
-        element.todos.forEach(todo => {
-            todoDisplay.appendChild(createTodo(todo.name, todo.description, todo.dueDate));
-
+    if(title === 'Today'){
+        //get all todos due today and append to todoDisplay
+        project.projects.forEach(element => {
+            let todaysTodos = element.getTodosToday()
+            todaysTodos.forEach(todo => {
+                todoDisplay.appendChild(createTodo(todo.name, todo.description, todo.dueDate));
+            });
         });
-    });
+    }
+
+    else if(title === 'This Week'){
+        //get all todos due this week
+        project.projects.forEach(element => {
+            let todaysTodos = element.getTodosThisWeek()
+            todaysTodos.forEach(todo => {
+                todoDisplay.appendChild(createTodo(todo.name, todo.description, todo.dueDate));
+            });
+        });
+    }
+
+    else{
+        //get all todos (total) and append to todoDisplay
+        project.projects.forEach(element => {
+            element.todos.forEach(todo => {
+                todoDisplay.appendChild(createTodo(todo.name, todo.description, todo.dueDate));
+            });
+        });
+    }
 
     content.appendChild(todoTitleUL)
     content.appendChild(todoDisplay);
@@ -385,10 +363,9 @@ function createProjectControl(project, title){
 
         const todoDueDate = document.createElement('p');
         todoDueDate.innerText = `Due: ${dueDate}`;
-        
         //find project that contains that specific todo
         const findProject = allProjectsList.projects.find(project => {
-            console.log(project.todos.find(todo => todo.name === title))
+            //console.log(project.todos.find(todo => todo.name === title))
             return project.todos.find(todo => todo.name === title);
         });
 
@@ -438,7 +415,6 @@ function createProjectControl(project, title){
         todoDeleteDiv.appendChild(todoDelete);
         todo.appendChild(todoDeleteDiv);
         todo.appendChild(todoDueDate);
-    
         //modal showing todo details
         todoDescription.addEventListener('click', () => {
             content.appendChild(showTodoDetails(title, description, dueDate));
@@ -447,7 +423,7 @@ function createProjectControl(project, title){
         //delete todo btn
         //find project that contains that specific todo
         const findProject = allProjectsList.projects.find(project => {
-            console.log(project.todos.find(todo => todo.name === title))
+            //console.log(project.todos.find(todo => todo.name === title))
             return project.todos.find(todo => todo.name === title);
         });
 
@@ -461,15 +437,12 @@ function createProjectControl(project, title){
     return article
 }
 
-
-
 function createProject(project){
     const article = document.createElement('article');
     article.id = 'article';
 
     const content = document.createElement('div');
     content.id = 'content';
-
     //// project content header
     const todoTitleUL = document.createElement('ul');
     todoTitleUL.id = 'todoTitleUL';
@@ -483,12 +456,10 @@ function createProject(project){
     todoTitleUL.appendChild(todoTitleSort);
 
     todoTitleSort.addEventListener('click', () => alert('sort the todo list by date'));
-
     // main content TODO list items
     const todoDisplay = document.createElement('ul'); 
     todoDisplay.id = 'todoDisplay';
     let todoCounter = 0;
-
     //get project todos and append to todoDisplay
     project.getTodos().forEach(element => {
         todoDisplay.appendChild(createTodo(element.getName(), element.getDescription(), element.getDueDate()));
@@ -510,7 +481,6 @@ function createProject(project){
     addTask.appendChild(addLogoDiv);
     addTask.appendChild(addTaskDescription);
     addTaskUL.appendChild(addTask);
-
     //create form to get users new todo info
     addTask.addEventListener('click', () => {
         todoDisplay.appendChild(gatherTodoInfo());
@@ -566,7 +536,6 @@ function createProject(project){
         formBtns.appendChild(acceptIconDiv)
         formBtns.appendChild(cancelIconDiv)
         todoForm.appendChild(formBtns);
-
         //add todo to the project when click accept
         acceptIconDiv.addEventListener('click', () => {
             //find current project, add todo to that project
@@ -591,7 +560,6 @@ function createProject(project){
     }
 
     function showTodoDetails(title, description, dueDate){
-
         let todoDetailsModal = document.createElement('div');
         todoDetailsModal.classList.add('modal');
         todoDetailsModal.id = 'toDoDetailsModal';
@@ -666,7 +634,6 @@ function createProject(project){
         todoDeleteDiv.appendChild(todoDelete);
         todo.appendChild(todoDeleteDiv);
         todo.appendChild(todoDueDate);
-    
         //modal showing todo details
         todoDescription.addEventListener('click', () => {
             content.appendChild(showTodoDetails(title, description, dueDate));
@@ -719,7 +686,6 @@ function createProject(project){
             formBtns.appendChild(acceptIconDiv)
             formBtns.appendChild(cancelIconDiv)
             editTodoForm.appendChild(formBtns);
-
             //add todo to the project when click accept
             acceptIconDiv.addEventListener('click', () => {
                 const currentProjectTitle = document.querySelector('#todoTitle');
@@ -771,4 +737,3 @@ function deleteTodoFromInbox(todo, project){
     project.deleteTodo(todo);
     loadProjectControl(allProjectsList, 'Inbox');
 }
-
