@@ -184,10 +184,28 @@ body{
   color: black;
 }
 
+
 .userTask{
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 70% 2% 2% 20%;
+
+}
+
+#todoDisplayInbox li{
+  border-radius: 0.75rem;
+  border-bottom: 1px solid var(--green4);
+}
+
+#todoDisplayInbox li:hover{
+  background-color: var(--green3);
+  color: black;
+}
+
+#todoDisplayInbox .userTask{
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 72% 2% 20%;
 
 }
 
