@@ -2,15 +2,15 @@ import {Project, Today} from './project';
 import Todo from './todo';
 import ProjectList from './projectList'
 
-export let allProjectsList = new ProjectList('allProjectsList');
-export let testProject2 = new Project('move house');
+let allProjectsList = new ProjectList('allProjectsList');
+let testProject2 = new Project('move house');
 let testProject3 = new Project('study for final');
 
-let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-10');
-let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-10');
-let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-09');
-let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-10');
-let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-12');
+let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-11');
+let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-12');
+let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-11');
+let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-12');
+let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-20');
 
 testProject2.addTodo(testTodo4);    
 testProject2.addTodo(testTodo5);    
@@ -20,7 +20,13 @@ testProject3.addTodo(testTodo9);
 
 allProjectsList.addProject(testProject2);
 allProjectsList.addProject(testProject3);
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
+localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
+console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
+//console.log(localStorage);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
 function createHeader() {
     const header = document.createElement('header');
     header.classList.add('header');
@@ -39,7 +45,7 @@ function createHeader() {
     return header;
     }
 
-export function loadHeader(){
+function loadHeader(){
     document.body.appendChild(createHeader());
 }
 
@@ -57,7 +63,7 @@ function createFooter(){
     return footer
 }
 
-export function loadFooter(){
+function loadFooter(){
     document.body.appendChild(createFooter());
 }
 
@@ -189,6 +195,9 @@ function createNav(){
             //console.table(allProjectsList);
             //UI-stuff
             refreshPage(newProject);
+            //update localstorage project list
+            localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
+            console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
         });
         //cancel add todo when click cancel
         cancelProjectIconDiv.addEventListener('click', () => {
@@ -238,7 +247,10 @@ function createNav(){
             refreshPage(testProject2);
             //show inbox screen
             loadProjectControl(allProjectsList, 'Inbox')
-            //console.log(allProjectsList);                   
+            //console.log(allProjectsList); 
+            //update localstorage project list
+            localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
+            console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));                  
         });
 
         projectCounter++;
@@ -263,7 +275,7 @@ function refreshPage(project){
     loadFooter();
 }
 
-export function loadMain(project){
+function loadMain(project){
     document.body.appendChild(createMain(project));
 }
 
@@ -276,7 +288,7 @@ function loadProject(project){
     main.appendChild(createProject(project));
 }
 
-export function loadProjectControl(projectControl, title){    //used only for inbox, today, and this week
+function loadProjectControl(projectControl, title){    //used only for inbox, today, and this week
     //clear article
     const article = document.querySelector('#article');
     article.remove();
@@ -427,7 +439,12 @@ function createProjectControl(project, title){
             return project.todos.find(todo => todo.name === title);
         });
 
-        todoDeleteDiv.addEventListener('click', () => deleteTodoFromInbox(title, findProject));
+        todoDeleteDiv.addEventListener('click', () => {
+            deleteTodoFromInbox(title, findProject)
+            //update localstorage project list
+            localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
+            console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
+        });
 
 
         todoCounter++;
@@ -536,6 +553,7 @@ function createProject(project){
         formBtns.appendChild(acceptIconDiv)
         formBtns.appendChild(cancelIconDiv)
         todoForm.appendChild(formBtns);
+
         //add todo to the project when click accept
         acceptIconDiv.addEventListener('click', () => {
             //find current project, add todo to that project
@@ -544,12 +562,15 @@ function createProject(project){
 
             let newTodo = new Todo(todoTitleForm.value, todoDescriptionForm.value, dueDateForm.value);
             currentProject.addTodo(newTodo);
+            //update localstorage project list
+            localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
+            console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
             //UI-stuff
             todoForm.classList.add('hide');
             addTask.classList.remove('hide');
             todoDisplay.appendChild(createTodo(todoTitleForm.value, todoDescriptionForm.value, dueDateForm.value));
         });
-        
+
         //cancel add todo when click cancel
         cancelIconDiv.addEventListener('click', () => {
             todoForm.classList.add('hide');
@@ -698,6 +719,9 @@ function createProject(project){
                 currentTodo.setDescription(todoDescriptionForm.value);
                 currentTodo.setDueDate(dueDateForm.value);
                 refreshPage(currentProject);
+                //update localstorage project list
+                localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
+                console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
             });
             //cancel edit todo when click cancel
             cancelIconDiv.addEventListener('click', () => {
@@ -711,7 +735,12 @@ function createProject(project){
             todoDisplay.appendChild(editTodoInfo(title, description, dueDate));
         });
         //delete todo btn
-        todoDeleteDiv.addEventListener('click', () => deleteTodo(title));
+        todoDeleteDiv.addEventListener('click', () => {
+            deleteTodo(title)
+            //update localstorage project list
+            localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
+            console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
+        });
 
         todoCounter++;
         return todo;
@@ -719,7 +748,8 @@ function createProject(project){
     return article
 }
 
-export function loadArticle(){
+
+function loadArticle(){
     document.body.appendChild(createArticle());
 }
 
@@ -737,6 +767,10 @@ function deleteTodoFromInbox(todo, project){
     project.deleteTodo(todo);
     loadProjectControl(allProjectsList, 'Inbox');
 }
+
+
+
+///make this load projectList from local storage
 
 export function initializePage(){
     loadHeader();
