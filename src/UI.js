@@ -2,31 +2,77 @@ import {Project, Today} from './project';
 import Todo from './todo';
 import ProjectList from './projectList'
 
-let allProjectsList = new ProjectList('allProjectsList');
-let testProject2 = new Project('move house');
-let testProject3 = new Project('study for final');
+//let allProjectsList = JSON.parse(localStorage.getItem('localAllProjectsList')) || new ProjectList('allProjectsList');
 
-let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-11');
-let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-12');
-let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-11');
-let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-12');
-let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-20');
+if (!localStorage.getItem('localAllProjectsList')) {
+    alert('stored list not found');
 
-testProject2.addTodo(testTodo4);    
-testProject2.addTodo(testTodo5);    
-testProject3.addTodo(testTodo7);    
-testProject3.addTodo(testTodo8);    
-testProject3.addTodo(testTodo9);    
+    //if list not found, populate list with default settings
+    let allProjectsList = new ProjectList('allProjectsList');
+    let testProject2 = new Project('move house');
+    let testProject3 = new Project('study for final');
 
-allProjectsList.addProject(testProject2);
-allProjectsList.addProject(testProject3);
-/////////////////////////////////////////////////////////////////////////////////////////////////
+    let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-11');
+    let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-12');
+    let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-11');
+    let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-12');
+    let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-20');
 
-localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
-console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
-//console.log(localStorage);
+    testProject2.addTodo(testTodo4);    
+    testProject2.addTodo(testTodo5);    
+    testProject3.addTodo(testTodo7);    
+    testProject3.addTodo(testTodo8);    
+    testProject3.addTodo(testTodo9);    
+    allProjectsList.addProject(testProject2);
+    allProjectsList.addProject(testProject3);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+    localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
+    let localAllProjectsList = JSON.parse(localStorage.getItem('localAllProjectsList'));
+
+} else {
+    alert('list has been found!');
+    //if list is found, populate 'allProjectsList' using the local list
+
+    //for each todo in local list, create a new todo
+    //for each project in local list, create new project
+    //add todos to projects, add projects to main list
+    
+    let allProjectsList = new ProjectList('allProjectsList');
+
+    let storedList = JSON.parse(localStorage.getItem('localAllProjectsList'));
+
+    storedList.projects.forEach((project) =>{
+        //print info for each todo in the local array
+        project.todos.forEach((todo) => {
+            console.log(todo);
+            console.log(todo.name);
+        });
+
+    });
+
+
+}
+
+
+// let allProjectsList = new ProjectList('allProjectsList');
+// let testProject2 = new Project('move house');
+// let testProject3 = new Project('study for final');
+
+// let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-11');
+// let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-12');
+// let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-11');
+// let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-12');
+// let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-20');
+
+// testProject2.addTodo(testTodo4);    
+// testProject2.addTodo(testTodo5);    
+// testProject3.addTodo(testTodo7);    
+// testProject3.addTodo(testTodo8);    
+// testProject3.addTodo(testTodo9);    
+// allProjectsList.addProject(testProject2);
+// allProjectsList.addProject(testProject3);
+
+
 function createHeader() {
     const header = document.createElement('header');
     header.classList.add('header');
@@ -265,6 +311,7 @@ function createMain(project){
     main.id = 'main';
     main.appendChild(createNav());
     main.appendChild(createProject(project));
+
     return main;
 }
 
