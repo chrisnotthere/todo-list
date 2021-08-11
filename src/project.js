@@ -1,5 +1,4 @@
 import './projectList';
-import {allProjectsList} from './UI'
 import { toDate, isToday, isThisWeek, subDays } from 'date-fns'
 
 export class Project{
@@ -46,5 +45,4 @@ export class Project{
           return isThisWeek(subDays(toDate(todoDate), 1));
         });
       }
-
 }
