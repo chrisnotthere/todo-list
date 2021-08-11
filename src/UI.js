@@ -276,7 +276,7 @@ function loadProject(project){
     main.appendChild(createProject(project));
 }
 
-function loadProjectControl(projectControl, title){    //used only for inbox, today, and this week
+export function loadProjectControl(projectControl, title){    //used only for inbox, today, and this week
     //clear article
     const article = document.querySelector('#article');
     article.remove();
@@ -735,5 +735,12 @@ function deleteTodo(todoTitle){
 
 function deleteTodoFromInbox(todo, project){
     project.deleteTodo(todo);
+    loadProjectControl(allProjectsList, 'Inbox');
+}
+
+export function initializePage(){
+    loadHeader();
+    loadMain(testProject2);
+    loadFooter();
     loadProjectControl(allProjectsList, 'Inbox');
 }
