@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/chrisnotthere/todo-list/issues"
   },
-  "homepage": "https://chrisnotthere.github.io/todo-list/",
+  "homepage": "https://chrisnotthere.github.io/todo-list",
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "css-loader": "^6.2.0",
