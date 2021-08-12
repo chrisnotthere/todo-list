@@ -5,21 +5,18 @@ import ProjectList from './projectList'
 if (!localStorage.getItem('localAllProjectsList')) {
     //if local storage list not found, create new list with default settings
     var allProjectsList = new ProjectList('allProjectsList');
-    var testProject2 = new Project('move house');
-    var testProject3 = new Project('study for final');
-    var testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-11');
-    var testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-12');
-    var testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-11');
-    var testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-12');
-    var testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-20');
+    var exampleProject = new Project('Example Project');
+    //var exampleProject = new Project('study for final');
+    var exampleTodo1 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-12');
+    var exampleTodo2 = new Todo('get moving boxes', 'ask at local grocery stores', '2021-08-13');
+    var exampleTodo3 = new Todo('make flash cards for studying', 'need a new pen', '2021-08-12');
+    var exampleTodo4 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-15');
 
-    testProject2.addTodo(testTodo4);    
-    testProject2.addTodo(testTodo5);    
-    testProject3.addTodo(testTodo7);    
-    testProject3.addTodo(testTodo8);    
-    testProject3.addTodo(testTodo9);    
-    allProjectsList.addProject(testProject2);
-    allProjectsList.addProject(testProject3);
+    exampleProject.addTodo(exampleTodo1);    
+    exampleProject.addTodo(exampleTodo2);    
+    exampleProject.addTodo(exampleTodo3);    
+    exampleProject.addTodo(exampleTodo4);    
+    allProjectsList.addProject(exampleProject);
     //save list to local storage
     localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
 } 
@@ -44,7 +41,7 @@ else {
     console.log(storedList);
 
     //create null project for initial page load
-    var testProject2 = new Project('for testing purposes');
+    var exampleProject = new Project('for testing purposes');
 }
 
 
@@ -55,7 +52,7 @@ function createHeader() {
     const logo = document.createElement('i');
     logo.classList.add('fas', 'fa-clipboard-list', 'fa-5x');
     logo.id = 'logo';
-    logo.width = '200px';
+    // logo.width = '200px';
     header.appendChild(logo);
 
     const titleDiv = document.createElement('div');
@@ -75,9 +72,23 @@ function createFooter(){
     footer.classList.add('footer');
     const div1 = document.createElement('div');
     const div2 = document.createElement('div');
+    div2.id = 'footerDiv2';
+
+    const footerTxt = document.createElement('div');
+    footerTxt.innerText = 'created by chrisnotthere';
+
+    const gitLink = document.createElement('a');
+    gitLink.href = 'https://github.com/chrisnotthere';
+
+    const gitLogo = document.createElement('i');
+    gitLogo.classList.add('fab', 'fa-github', 'fa-2x');
+    gitLogo.id = 'gitLogo';
+
+    div2.appendChild(footerTxt);
+    gitLink.appendChild(gitLogo);
+    div2.appendChild(gitLink);
 
     div1.innerHTML = 'ToDo List app &#9400; 2021';
-    div2.textContent = 'created by chrisnotthere (github link)';
     footer.appendChild(div1);
     footer.appendChild(div2);
 
@@ -265,7 +276,7 @@ function createNav(){
         projectDeleteDiv.addEventListener('click', () => {
             //delete project and refresh the page...
             allProjectsList.deleteProject(title);
-            refreshPage(testProject2);
+            refreshPage(exampleProject);
             //show inbox screen
             loadProjectControl(allProjectsList, 'Inbox')
             //console.log(allProjectsList); 
@@ -794,7 +805,7 @@ function deleteTodoFromInbox(todo, project){
 
 export function initializePage(){
     loadHeader();
-    loadMain(testProject2);
+    loadMain(exampleProject);
     loadFooter();
     loadProjectControl(allProjectsList, 'Inbox');
 }
