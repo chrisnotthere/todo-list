@@ -6,12 +6,10 @@ if (!localStorage.getItem('localAllProjectsList')) {
     //if local storage list not found, create new list with default settings
     var allProjectsList = new ProjectList('allProjectsList');
     var exampleProject = new Project('Example Project');
-    //var exampleProject = new Project('study for final');
     var exampleTodo1 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-12');
     var exampleTodo2 = new Todo('get moving boxes', 'ask at local grocery stores', '2021-08-13');
     var exampleTodo3 = new Todo('make flash cards for studying', 'need a new pen', '2021-08-12');
     var exampleTodo4 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-15');
-
     exampleProject.addTodo(exampleTodo1);    
     exampleProject.addTodo(exampleTodo2);    
     exampleProject.addTodo(exampleTodo3);    
@@ -37,13 +35,9 @@ else {
         });
     });
 
-    console.log(allProjectsList);
-    console.log(storedList);
-
-    //create null project for initial page load
-    var exampleProject = new Project('for testing purposes');
+    //create empty project for initial page load
+    var exampleProject = new Project('for loading purposes');
 }
-
 
 function createHeader() {
     const header = document.createElement('header');
@@ -52,16 +46,14 @@ function createHeader() {
     const logo = document.createElement('i');
     logo.classList.add('fas', 'fa-clipboard-list', 'fa-5x');
     logo.id = 'logo';
-    // logo.width = '200px';
     header.appendChild(logo);
 
     const titleDiv = document.createElement('div');
     titleDiv.id = 'title';
     titleDiv.innerText = 'ToDo List';
     header.appendChild(titleDiv);
-
     return header;
-    }
+}
 
 function loadHeader(){
     document.body.appendChild(createHeader());
@@ -87,11 +79,9 @@ function createFooter(){
     div2.appendChild(footerTxt);
     gitLink.appendChild(gitLogo);
     div2.appendChild(gitLink);
-
     div1.innerHTML = 'ToDo List app &#9400; 2021';
     footer.appendChild(div1);
     footer.appendChild(div2);
-
     return footer
 }
 
@@ -102,7 +92,6 @@ function loadFooter(){
 function createNav(){
     const nav = document.createElement('nav');
     nav.id = 'nav';
-    //// NAV controls
     const controls = document.createElement('ul'); 
     controls.id = 'controls';
     // inbox
@@ -222,10 +211,7 @@ function createNav(){
         //create new project
         acceptProjectIconDiv.addEventListener('click', () => {
             let newProject = new Project(projectTitleForm.value, []);
-            //console.table(newProject);
             allProjectsList.addProject(newProject);
-            //console.table(allProjectsList);
-            //UI-stuff
             refreshPage(newProject);
             //update localstorage project list
             localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
@@ -236,7 +222,6 @@ function createNav(){
             projectForm.classList.add('hide');
             addProject.classList.remove('hide');
         });
-
         return projectForm;
     }
 
@@ -277,18 +262,13 @@ function createNav(){
             //delete project and refresh the page...
             allProjectsList.deleteProject(title);
             refreshPage(exampleProject);
-            //show inbox screen
             loadProjectControl(allProjectsList, 'Inbox')
-            //console.log(allProjectsList); 
-            //update localstorage project list
             localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
             console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));                  
         });
-
         projectCounter++;
         return project;
     }
-
     return nav;
 }
 
@@ -297,7 +277,6 @@ function createMain(project){
     main.id = 'main';
     main.appendChild(createNav());
     main.appendChild(createProject(project));
-
     return main;
 }
 
@@ -313,19 +292,15 @@ function loadMain(project){
 }
 
 function loadProject(project){
-    //clear article
     const article = document.querySelector('#article');
     article.remove();
-    //create new article, append it to main
     const main = document.querySelector('main');
     main.appendChild(createProject(project));
 }
 
 function loadProjectControl(projectControl, title){    //used only for inbox, today, and this week
-    //clear article
     const article = document.querySelector('#article');
     article.remove();
-    //create new article, append it to main
     const main = document.querySelector('main');
     main.appendChild(createProjectControl(projectControl, title));
 }
@@ -464,11 +439,9 @@ function createProjectControl(project, title){
         todoDescription.addEventListener('click', () => {
             content.appendChild(showTodoDetails(title, description, dueDate));
         });
-
         //delete todo btn
         //find project that contains that specific todo
         const findProject = allProjectsList.projects.find(project => {
-            //console.log(project.todos.find(todo => todo.name === title))
             return project.todos.find(todo => todo.name === title);
         });
 
@@ -478,12 +451,9 @@ function createProjectControl(project, title){
             localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
             console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
         });
-
-
         todoCounter++;
         return todo;
     }
-
     return article
 }
 
@@ -599,18 +569,15 @@ function createProject(project){
             //update localstorage project list
             localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
             console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
-            //UI-stuff
             todoForm.classList.add('hide');
             addTask.classList.remove('hide');
             todoDisplay.appendChild(createTodo(todoTitleForm.value, todoDescriptionForm.value, dueDateForm.value));
         });
-
         //cancel add todo when click cancel
         cancelIconDiv.addEventListener('click', () => {
             todoForm.classList.add('hide');
             addTask.classList.remove('hide');
         });
-
         return todoForm;
     }
 
@@ -775,16 +742,10 @@ function createProject(project){
             localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
             console.log(JSON.parse(localStorage.getItem('localAllProjectsList')));
         });
-
         todoCounter++;
         return todo;
     }
     return article
-}
-
-
-function loadArticle(){
-    document.body.appendChild(createArticle());
 }
 
 function deleteTodo(todoTitle){
@@ -801,7 +762,6 @@ function deleteTodoFromInbox(todo, project){
     project.deleteTodo(todo);
     loadProjectControl(allProjectsList, 'Inbox');
 }
-
 
 export function initializePage(){
     loadHeader();
