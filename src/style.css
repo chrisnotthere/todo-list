@@ -232,8 +232,28 @@ body{
   justify-content: space-between;
   align-items: center;
   background-color: var(--blue2);
-  padding: 1rem;
+  padding: 0.79rem 2rem;
+
 }
+
+#footerDiv2{
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+#gitLogo{
+  margin-left: 0.5rem;
+  color: #000;
+  transition: transform 0.75s ease-in-out;
+  transform: rotate(0deg);
+}
+
+#gitLogo:hover{
+  color: var(--black);
+  transform: rotate(360deg);
+}
+
 
 #title{
   font-size: 4rem;
