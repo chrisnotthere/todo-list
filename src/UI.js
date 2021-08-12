@@ -2,21 +2,16 @@ import {Project, Today} from './project';
 import Todo from './todo';
 import ProjectList from './projectList'
 
-//let allProjectsList = JSON.parse(localStorage.getItem('localAllProjectsList')) || new ProjectList('allProjectsList');
-
 if (!localStorage.getItem('localAllProjectsList')) {
-    alert('stored list not found');
-
-    //if list not found, populate list with default settings
-    let allProjectsList = new ProjectList('allProjectsList');
-    let testProject2 = new Project('move house');
-    let testProject3 = new Project('study for final');
-
-    let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-11');
-    let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-12');
-    let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-11');
-    let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-12');
-    let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-20');
+    //if local storage list not found, create new list with default settings
+    var allProjectsList = new ProjectList('allProjectsList');
+    var testProject2 = new Project('move house');
+    var testProject3 = new Project('study for final');
+    var testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-11');
+    var testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-12');
+    var testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-11');
+    var testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-12');
+    var testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-20');
 
     testProject2.addTodo(testTodo4);    
     testProject2.addTodo(testTodo5);    
@@ -25,52 +20,32 @@ if (!localStorage.getItem('localAllProjectsList')) {
     testProject3.addTodo(testTodo9);    
     allProjectsList.addProject(testProject2);
     allProjectsList.addProject(testProject3);
-
+    //save list to local storage
     localStorage.setItem('localAllProjectsList', JSON.stringify(allProjectsList));
-    let localAllProjectsList = JSON.parse(localStorage.getItem('localAllProjectsList'));
-
-} else {
-    alert('list has been found!');
-    //if list is found, populate 'allProjectsList' using the local list
-
-    //for each todo in local list, create a new todo
-    //for each project in local list, create new project
-    //add todos to projects, add projects to main list
-    
-    let allProjectsList = new ProjectList('allProjectsList');
-
+} 
+else {
+    //if local list is found, populate 'allProjectsList' var using the local list
+    var allProjectsList = new ProjectList('allProjectsList');
     let storedList = JSON.parse(localStorage.getItem('localAllProjectsList'));
 
     storedList.projects.forEach((project) =>{
-        //print info for each todo in the local array
-        project.todos.forEach((todo) => {
-            console.log(todo);
-            console.log(todo.name);
-        });
+        //loop through each stored project and add project to list
+        var newProject = new Project(project.name);
+        allProjectsList.addProject(newProject);
 
+        project.todos.forEach((todo) => {
+            //loop through each stored todo and add to project
+            var newTodo = new Todo(todo.name, todo.description, todo.dueDate);
+            newProject.addTodo(newTodo);
+        });
     });
 
+    console.log(allProjectsList);
+    console.log(storedList);
 
+    //create null project for initial page load
+    var testProject2 = new Project('for testing purposes');
 }
-
-
-// let allProjectsList = new ProjectList('allProjectsList');
-// let testProject2 = new Project('move house');
-// let testProject3 = new Project('study for final');
-
-// let testTodo4 = new Todo('update address', 'bank, magazine subscriptions, car insurance', '2021-08-11');
-// let testTodo5 = new Todo('get boxes', 'ask at local grocery stores', '2021-08-12');
-// let testTodo7 = new Todo('make flash cards', 'need a new pen', '2021-08-11');
-// let testTodo8 = new Todo('get extra stong coffee', 'costco has cheap coffee', '2021-08-12');
-// let testTodo9 = new Todo('study all night', 'take a nap in the afternoon', '2021-08-20');
-
-// testProject2.addTodo(testTodo4);    
-// testProject2.addTodo(testTodo5);    
-// testProject3.addTodo(testTodo7);    
-// testProject3.addTodo(testTodo8);    
-// testProject3.addTodo(testTodo9);    
-// allProjectsList.addProject(testProject2);
-// allProjectsList.addProject(testProject3);
 
 
 function createHeader() {
@@ -526,6 +501,7 @@ function createProject(project){
     let todoCounter = 0;
     //get project todos and append to todoDisplay
     project.getTodos().forEach(element => {
+        console.log(element);
         todoDisplay.appendChild(createTodo(element.getName(), element.getDescription(), element.getDueDate()));
     });
 
@@ -815,9 +791,6 @@ function deleteTodoFromInbox(todo, project){
     loadProjectControl(allProjectsList, 'Inbox');
 }
 
-
-
-///make this load projectList from local storage
 
 export function initializePage(){
     loadHeader();
